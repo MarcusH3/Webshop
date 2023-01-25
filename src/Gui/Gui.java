@@ -49,6 +49,7 @@ public class Gui implements ActionListener {
         backPanel.setVisible(true);
 
         frame.setVisible(true);
+        System.out.println(backPanel.getSize().getHeight());
     }
 
     public void updateGui(){
