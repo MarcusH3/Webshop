@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 public class Gui implements ActionListener {
     private State state;
     private JPanel backPanel;
-    private JPanel centerPanel;
-    private JPanel welcomePanel;
     private JPanel genderPanel;
+    private JPanel welcomePanel;
+    private JPanel categoryPanel;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -23,7 +23,7 @@ public class Gui implements ActionListener {
     }
 
     private Gui(){
-        state = State.WELCOME;
+        state = State.INTRO;
         buttons = new Buttons(this);
         makeGui();
         updateGui();
@@ -42,8 +42,8 @@ public class Gui implements ActionListener {
 
         backPanel = new BackPanel();
         welcomePanel = new WelcomePanel(buttons);
-        centerPanel = new GenderPanel(buttons);
-        genderPanel = new CategoryPanel(buttons);
+        genderPanel = new GenderPanel(buttons);
+        categoryPanel = new CategoryPanel(buttons);
 
         frame.add(backPanel);
         backPanel.setVisible(true);
@@ -57,21 +57,23 @@ public class Gui implements ActionListener {
        switch (buttons.getState()){
 
            case WELCOME ->{
+               genderPanel.setVisible(false);
+               backPanel.remove(genderPanel);
                 welcomePanel.setVisible(true);
                 backPanel.add(welcomePanel);
             }
             case INTRO -> {
                welcomePanel.setVisible(false);
                 backPanel.remove(welcomePanel);
-                centerPanel.setVisible(true);
-                backPanel.add(centerPanel);
+                genderPanel.setVisible(true);
+                backPanel.add(genderPanel);
 
             }
             case WOMAN, MAN, UNISEX -> {
-                centerPanel.setVisible(false);
-                backPanel.remove(centerPanel);
-                genderPanel.setVisible(true);
-                backPanel.add(genderPanel);
+                genderPanel.setVisible(false);
+                backPanel.remove(genderPanel);
+                categoryPanel.setVisible(true);
+                backPanel.add(categoryPanel);
             }
             case SNEAKER, SANDAL, SLIPPER -> {
 

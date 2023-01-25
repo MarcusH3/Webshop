@@ -12,9 +12,14 @@ public class WelcomePanel extends JPanel{
 
         setBackground(Color.white);
         setLayout(new GridLayout());
-        ImageIcon welcomeImage = new ImageIcon("Res/Title7.png");
 
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BorderLayout());
+        leftPanel.setBackground(Color.WHITE);
+
+        ImageIcon welcomeImage = new ImageIcon("Res/Title7.png");
         JLabel welcomeLabel = new JLabel(welcomeImage);
+        leftPanel.add(welcomeLabel, BorderLayout.WEST);
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
@@ -218,7 +223,7 @@ public class WelcomePanel extends JPanel{
         backgroundPanel.add(centerPanel);
         backgroundPanel.add(bottomPanel);
 
-        add(welcomeLabel);
+        add(leftPanel);
         add(backgroundPanel);
         System.out.println(backgroundPanel.getSize().getHeight());
     }

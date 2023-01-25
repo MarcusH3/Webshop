@@ -13,14 +13,24 @@ public class Buttons extends AbstractGui implements ActionListener{
     private JButton button4;
     private JButton button5;
     private JButton button6;
-
+    private JButton introButton1;
+    private JButton introButton2;
+    private JButton introButton3;
+    private JButton introButton4;
+    private JButton introButton5;
+    private JButton introButton6;
+    private JButton introButton7;
+    private JButton introButton8;
+    private JButton introButton9;
     private JButton loginButton;
     private JButton exitButton;
     private Gui gui;
+    private Dimension introButtonDimension;
     GridBagConstraints gbc;
     State state = State.WELCOME;
     public Buttons(Gui gui){
 
+        introButtonDimension = new Dimension(200,60);
         this.gui = gui;
 
         gbc = new GridBagConstraints();
@@ -76,6 +86,95 @@ public class Buttons extends AbstractGui implements ActionListener{
 
         exitButton = new JButton("EXIT");
         exitButton.addActionListener(this);
+
+        introButton1 = new JButton("BUTTON");
+        introButton2 = new JButton("BUTTON");
+        introButton3 = new JButton("Statistics");
+        introButton4 = new JButton("BUTTON");
+        introButton5 = new JButton("BUTTON");
+        introButton6 = new JButton("BUTTON");
+        introButton7 = new JButton("Return");
+        introButton8 = new JButton("BUTTON");
+        introButton9 = new JButton("BUTTON");
+
+        introButton1.setPreferredSize(introButtonDimension);
+        introButton2.setPreferredSize(introButtonDimension);
+        introButton3.setPreferredSize(introButtonDimension);
+        introButton4.setPreferredSize(introButtonDimension);
+        introButton5.setPreferredSize(introButtonDimension);
+        introButton6.setPreferredSize(introButtonDimension);
+        introButton7.setPreferredSize(introButtonDimension);
+        introButton8.setPreferredSize(introButtonDimension);
+        introButton9.setPreferredSize(introButtonDimension);
+
+
+
+        introButton1.setBorder(null);
+        introButton2.setBorder(null);
+        introButton3.setBorder(null);
+        introButton4.setBorder(null);
+        introButton5.setBorder(null);
+        introButton6.setBorder(null);
+        introButton7.setBorder(null);
+        introButton8.setBorder(null);
+        introButton9.setBorder(null);
+
+        introButton1.setBackground(Color.cyan);
+        introButton2.setBackground(Color.cyan);
+        introButton3.setBackground(Color.cyan);
+        introButton4.setBackground(Color.cyan);
+        introButton5.setBackground(Color.cyan);
+        introButton6.setBackground(Color.cyan);
+        introButton7.setBackground(Color.cyan);
+        introButton8.setBackground(Color.cyan);
+        introButton9.setBackground(Color.cyan);
+
+        introButton1.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton2.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton3.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton4.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton5.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton6.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton7.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton8.setIcon(new ImageIcon("Res/icon1.png"));
+        introButton9.setIcon(new ImageIcon("Res/icon1.png"));
+
+        introButton3.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton3.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton3.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton3.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton4.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton4.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton4.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton4.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton5.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton5.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton5.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton5.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton6.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton6.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton6.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton6.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton7.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton7.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton7.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton7.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton8.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton8.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton8.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton8.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        introButton3.addActionListener(this);
+        introButton7.addActionListener(this);
+        /*introButton9.setHorizontalAlignment(SwingConstants.LEFT);
+        introButton9.setHorizontalTextPosition(SwingConstants.TRAILING);
+        introButton9.setVerticalTextPosition(SwingConstants.BOTTOM);
+        introButton9.setFont(new Font("Arial", Font.PLAIN, 20));*/
     }
 
     public static ImageIcon getImageIcon(String path){
@@ -115,6 +214,16 @@ public class Buttons extends AbstractGui implements ActionListener{
                 else if (e.getSource()== button3) {
                     System.out.println("Unisex");
                     setState(State.UNISEX);
+                    gui.updateGui();
+                }
+                else if (e.getSource()== introButton3) {
+                    System.out.println("Unisex");
+                    setState(State.UNISEX);
+                    gui.updateGui();
+                }
+                else if (e.getSource()== introButton7) {
+                    System.out.println("Unisex");
+                    setState(State.WELCOME);
                     gui.updateGui();
                 }
             }
@@ -173,6 +282,51 @@ public class Buttons extends AbstractGui implements ActionListener{
     @Override
     public JButton getExitButton() {
         return exitButton;
+    }
+
+    @Override
+    public JButton getIntroButton1() {
+        return introButton1;
+    }
+
+    @Override
+    public JButton getIntroButton2() {
+        return introButton2;
+    }
+
+    @Override
+    public JButton getIntroButton3() {
+        return introButton3;
+    }
+
+    @Override
+    public JButton getIntroButton4() {
+        return introButton4;
+    }
+
+    @Override
+    public JButton getIntroButton5() {
+        return introButton5;
+    }
+
+    @Override
+    public JButton getIntroButton6() {
+        return introButton6;
+    }
+
+    @Override
+    public JButton getIntroButton7() {
+        return introButton7;
+    }
+
+    @Override
+    public JButton getIntroButton8() {
+        return introButton8;
+    }
+
+    @Override
+    public JButton getIntroButton9() {
+        return introButton9;
     }
 
     @Override

@@ -5,8 +5,6 @@ import java.awt.*;
 
 public class CategoryPanel extends JPanel {
 
-
-
     public CategoryPanel(LayoutManager layout, boolean isDoubleBuffered) {
         super(layout, isDoubleBuffered);
     }
