@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-
-
-public class GenderPanel extends JPanel{
+public class PageNotFound extends JPanel{
 
     private JButton button1;
     private JButton button2;
@@ -18,7 +16,7 @@ public class GenderPanel extends JPanel{
     private JButton button7;
     private JButton button8;
     private JButton button9;
-    public GenderPanel(Buttons buttons) {
+    public PageNotFound(Buttons buttons) {
 
         setBackground(Color.white);
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
@@ -103,6 +101,9 @@ public class GenderPanel extends JPanel{
         panel1.add(button6);
         welcomeLabel.add(panel1);
 
+
+
+
         leftPanel.add(welcomeLabel, BorderLayout.WEST);
 
         JPanel backgroundPanel = new JPanel();
@@ -112,5 +113,6 @@ public class GenderPanel extends JPanel{
         add(backgroundPanel);
         System.out.println(backgroundPanel.getSize().getHeight());
     }
+
 
 }
