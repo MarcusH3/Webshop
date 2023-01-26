@@ -8,6 +8,7 @@ public class Gui implements ActionListener {
     private State state;
     private JPanel backPanel;
     private JPanel genderPanel;
+    private JPanel rightAlignedPanel;
     private JPanel welcomePanel;
     private JPanel categoryPanel;
     private JPanel pageNotFoundPanel;
@@ -43,8 +44,8 @@ public class Gui implements ActionListener {
 
         backPanel = new BackPanel();
         welcomePanel = new WelcomePanel(buttons);
-        genderPanel = new GenderPanel(buttons);
-        categoryPanel = new CategoryPanel(buttons);
+         rightAlignedPanel = new RightAlignedMenu(buttons);
+        //categoryPanel = new CategoryPanel(buttons);
         //pageNotFoundPanel = new PageNotFound(buttons);
 
         frame.add(backPanel);
@@ -67,8 +68,9 @@ public class Gui implements ActionListener {
             case INTRO -> {
                 backPanel.getComponent(0).setVisible(false);
                 backPanel.remove(0);
-                genderPanel.setVisible(true);
-                backPanel.add(genderPanel);
+                rightAlignedPanel.setVisible(true);
+                backPanel.add(rightAlignedPanel);
+                backPanel.add()
 
             }
 
@@ -76,9 +78,9 @@ public class Gui implements ActionListener {
            case NOT_FOUND -> {
                backPanel.getComponent(0).setVisible(false);
                backPanel.remove(0);
-               genderPanel.setVisible(true);
-               genderPanel.add(new JButton("hej"));
-               backPanel.add(genderPanel);
+               rightAlignedPanel.setVisible(true);
+               rightAlignedPanel.add(new JButton("hej"));
+               backPanel.add(rightAlignedPanel);
 
            }
             case WOMAN, MAN, UNISEX -> {
