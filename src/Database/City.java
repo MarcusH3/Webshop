@@ -1,6 +1,7 @@
 package Database;
 
 public class City {
+
     private int cityID;
     private String cityName;
 
@@ -11,19 +12,15 @@ public class City {
         this.cityName = cityName;
     }
 
-    public int getCityID() {
-        return cityID;
-    }
-
-    public void setCityID(int cityID) {
-        this.cityID = cityID;
-    }
-
-    public String getCityName() {
+    public String getCityName(){
         return cityName;
     }
+    @Override
+    public String toString(){
+        return "City{" +
+                "id=" + cityID +
+                ", countyName='" + cityName +
+                '}';
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 }

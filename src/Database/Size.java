@@ -1,71 +1,35 @@
 package Database;
 
-import java.sql.Timestamp;
-
 public class Size {
     private int sizeID;
-    private int euSize;
-    private int ukSize;
-    private int usSize;
-    private Timestamp created;
-    private Timestamp lastUpdated;
+    private double euSize;
+    private double ukSize;
+    private double usSize;
 
-    public Size() { }
 
-    public Size(int sizeID, int euSize, int ukSize, int usSize, Timestamp created, Timestamp lastUpdated) {
+
+    public Size(int sizeID, int euSize, int ukSize, int usSize) {
         this.sizeID = sizeID;
         this.euSize = euSize;
         this.ukSize = ukSize;
         this.usSize = usSize;
-        this.created = created;
-        this.lastUpdated = lastUpdated;
-    }
 
-    public int getSizeID() {
-        return sizeID;
     }
+    public double getEuSize(){
+    return euSize;}
 
-    public void setSizeID(int sizeID) {
-        this.sizeID = sizeID;
-    }
+    public double getukSize(){
+    return ukSize;}
 
-    public int getEuSize() {
-        return euSize;
-    }
+    public double getusSize(){
+        return usSize;}
 
-    public void setEuSize(int euSize) {
-        this.euSize = euSize;
-    }
-
-    public int getUkSize() {
-        return ukSize;
-    }
-
-    public void setUkSize(int ukSize) {
-        this.ukSize = ukSize;
-    }
-
-    public int getUsSize() {
-        return usSize;
-    }
-
-    public void setUsSize(int usSize) {
-        this.usSize = usSize;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
-    public Timestamp getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Timestamp lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    @Override
+    public String toString(){
+        return "Size{" +
+                "id=" + sizeID + ", eu=" + euSize +
+                ", uk=" + ukSize + ", us=" + usSize +
+                '}';
     }
 }
+
