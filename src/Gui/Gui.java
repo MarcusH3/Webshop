@@ -1,10 +1,13 @@
 package Gui;
+import DataBaseConnections.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Gui implements ActionListener {
+    private Main main;
     private State state;
     private JPanel backPanel;
     private JPanel genderPanel;
@@ -28,6 +31,7 @@ public class Gui implements ActionListener {
     private Gui(){
         state = State.INTRO;
         buttons = new Buttons(this);
+        main = new Main();
         makeGui();
         updateGui();
 
@@ -147,5 +151,7 @@ public class Gui implements ActionListener {
     public JPanel getBackPanel() {
         return backPanel;
     }
-
+    public Main getMain() {
+        return main;
+    }
 }

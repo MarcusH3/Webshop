@@ -1,7 +1,6 @@
 package Gui;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalBorders;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -273,7 +272,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     System.out.println("Woman");
 
                 } else if (e.getSource()== introButton2) {
-                    System.out.println("TOP PRODUCTS");
+                    gui.getMain().getTopFive();
                     setState(State.NOT_FOUND);
                     gui.updateGui();
                 }
@@ -286,6 +285,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 else if (e.getSource()== introButton4) {
                     setPreviousState(getState());
                     System.out.println("EXPLORE");
+                    gui.getMain().getCustomer();
                     setState(State.NOT_FOUND);
                     gui.updateGui();
                 }
