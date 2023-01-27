@@ -225,7 +225,6 @@ public class WelcomePanel extends JPanel{
 
         add(leftPanel);
         add(backgroundPanel);
-        System.out.println(backgroundPanel.getSize().getHeight());
     }
 
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class RightAlignedMenu extends JPanel {
+public class LeftAlignedMenu extends JPanel {
 
     private JButton button1;
     private JButton button2;
@@ -16,7 +16,7 @@ public class RightAlignedMenu extends JPanel {
     private JButton button7;
     private JButton button8;
     private JButton button9;
-    public RightAlignedMenu(Buttons buttons){
+    public LeftAlignedMenu(Buttons buttons){
 
         setBackground(Color.white);
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
@@ -82,24 +82,26 @@ public class RightAlignedMenu extends JPanel {
         welcomeLabel.add(searchLabel);
 
         button2.setBounds(50,168,200,84);
-        panel1.add(button2);
-        welcomeLabel.add(panel1);
-
+        welcomeLabel.add(button2);
         button3.setBounds(50,252,200,84);
+        welcomeLabel.add(button3);
+        button4.setBounds(50,336,200,84);
+        welcomeLabel.add(button4);
+        button5.setBounds(50,410,200,84);
+        welcomeLabel.add(button5);
+        button6.setBounds(50,494,200,84);
+        welcomeLabel.add(button6);
+
+        /*panel1.add(button2);
+        welcomeLabel.add(panel1);
         panel1.add(button3);
         welcomeLabel.add(panel1);
-
-        button4.setBounds(50,336,200,84);
         panel1.add(button4);
         welcomeLabel.add(panel1);
-
-        button5.setBounds(50,410,200,84);
         panel1.add(button5);
         welcomeLabel.add(panel1);
-
-        button6.setBounds(50,494,200,84);
         panel1.add(button6);
-        welcomeLabel.add(panel1);
+        welcomeLabel.add(panel1);*/
 
         leftPanel.add(welcomeLabel, BorderLayout.WEST);
 
@@ -107,8 +109,6 @@ public class RightAlignedMenu extends JPanel {
         backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
 
         add(leftPanel);
-
+        setPreferredSize(new Dimension(300,763));
     }
-
-
 }

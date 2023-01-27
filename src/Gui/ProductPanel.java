@@ -1,4 +1,9 @@
 package Gui;
 
-public class ProductPanel {
+import javax.swing.*;
+
+public class ProductPanel extends JPanel {
+    public ProductPanel(Buttons buttons){
+
+    }
 }

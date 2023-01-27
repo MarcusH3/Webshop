@@ -8,10 +8,11 @@ public class Gui implements ActionListener {
     private State state;
     private JPanel backPanel;
     private JPanel genderPanel;
-    private JPanel rightAlignedPanel;
     private JPanel welcomePanel;
+    private JPanel introPanel;
     private JPanel categoryPanel;
     private JPanel pageNotFoundPanel;
+    private JPanel leftAlignedMenu;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -44,9 +45,13 @@ public class Gui implements ActionListener {
 
         backPanel = new BackPanel();
         welcomePanel = new WelcomePanel(buttons);
-         rightAlignedPanel = new RightAlignedMenu(buttons);
+        introPanel = new IntroPanel(buttons);
+        leftAlignedMenu = new LeftAlignedMenu(buttons);
+        pageNotFoundPanel = new PageNotFound(buttons);
+        genderPanel = new GenderPanel(buttons);
+
         //categoryPanel = new CategoryPanel(buttons);
-        //pageNotFoundPanel = new PageNotFound(buttons);
+        //
 
         frame.add(backPanel);
         backPanel.setVisible(true);
@@ -56,32 +61,33 @@ public class Gui implements ActionListener {
     }
 
     public void updateGui(){
-        System.out.println(buttons.getState());
+        for(Component component : backPanel.getComponents()){
+            component.setVisible(false);
+            backPanel.remove(component);
+        }
+        for(Component component : introPanel.getComponents()){
+            component.setVisible(false);
+            introPanel.remove(component);
+        }
        switch (buttons.getState()){
 
            case WELCOME ->{
-               backPanel.getComponent(0).setVisible(false);
-               backPanel.remove(0);
-                welcomePanel.setVisible(true);
-                backPanel.add(welcomePanel);
+               welcomePanel.setVisible(true);
+               backPanel.add(welcomePanel);
             }
             case INTRO -> {
-                backPanel.getComponent(0).setVisible(false);
-                backPanel.remove(0);
-                rightAlignedPanel.setVisible(true);
-                backPanel.add(rightAlignedPanel);
-                backPanel.add()
-
+                introPanel.add(leftAlignedMenu);
+                introPanel.add(genderPanel);
+                introPanel.setVisible(true);
+                backPanel.add(introPanel);
             }
 
             //TODO: Fix not found state;
            case NOT_FOUND -> {
-               backPanel.getComponent(0).setVisible(false);
-               backPanel.remove(0);
-               rightAlignedPanel.setVisible(true);
-               rightAlignedPanel.add(new JButton("hej"));
-               backPanel.add(rightAlignedPanel);
-
+               introPanel.add(leftAlignedMenu);
+               introPanel.add(pageNotFoundPanel);
+               introPanel.setVisible(true);
+               backPanel.add(introPanel);
            }
             case WOMAN, MAN, UNISEX -> {
                 genderPanel.setVisible(false);
@@ -93,9 +99,10 @@ public class Gui implements ActionListener {
 
             }
         }
+        for(Component component : introPanel.getComponents()){
+            component.setVisible(true);
+        }
     }
-
-
     public static void main(String[] args) {
         gui = Gui.getInstance();
     }
@@ -112,4 +119,33 @@ public class Gui implements ActionListener {
     public void setState(State state) {
         this.state = state;
     }
+
+    public JPanel getGenderPanel() {
+        return genderPanel;
+    }
+
+    public JPanel getLeftAlignedMenu() {
+        return leftAlignedMenu;
+    }
+
+    public JPanel getWelcomePanel() {
+        return welcomePanel;
+    }
+
+    public JPanel getIntroPanel() {
+        return introPanel;
+    }
+
+    public JPanel getCategoryPanel() {
+        return categoryPanel;
+    }
+
+    public JPanel getPageNotFoundPanel() {
+        return pageNotFoundPanel;
+    }
+
+    public JPanel getBackPanel() {
+        return backPanel;
+    }
+
 }

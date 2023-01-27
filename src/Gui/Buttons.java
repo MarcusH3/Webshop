@@ -256,6 +256,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 if(e.getSource() == loginButton){
                     setPreviousState(getState());
                     setState(State.INTRO);
+                    gui.getBackPanel().getComponent(0).setVisible(false);
+                    gui.getBackPanel().remove(0);
                     gui.updateGui();
                     System.out.println("hej");
                 }
@@ -271,7 +273,6 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     System.out.println("Woman");
 
                 } else if (e.getSource()== introButton2) {
-                    setPreviousState(getState());
                     System.out.println("TOP PRODUCTS");
                     setState(State.NOT_FOUND);
                     gui.updateGui();
@@ -296,8 +297,16 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 }
                 else if (e.getSource()== introButton6) {
                     System.out.println(getPreviousState());
-                    setState(getPreviousState());
-                    gui.updateGui();
+                    switch (getState()){
+                        case INTRO -> {
+                            setState(State.WELCOME);
+                            gui.updateGui();
+                        }
+                        case NOT_FOUND -> {
+                            setState(State.INTRO);
+                            gui.updateGui();
+                        }
+                    }
                 }
             }
             case WOMAN, MAN, UNISEX-> {
