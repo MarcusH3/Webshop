@@ -1,14 +1,52 @@
 package DataBaseConnections;
 
 import Database.*;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Properties;
 
 public class DataBaseConnection {
-    private static Connection createConnection() {
-    Connection con = null;
-    return con;
+private Connection con;
+private static Properties properties;
+
+    public static Connection createConnection(){
+        Connection con = null;
+        return con;
+    }
+
+public static void connectAndQueryDB(String username, String password){
+
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+    try(Connection con = DriverManager.getConnection(
+            properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT customerFirstName,customerLastName from customers");
+
+            while(resultSet.next()){
+                String firstName = resultSet.getString("customerFirstName");
+                String lastName = resultSet.getString("customerLastName");
+
+                System.out.println(lastName+", "+firstName+"\n");
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 }
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
         and provides a set of methods that the rest of the program can use to perform CRUD (Create, Read, Update, Delete)

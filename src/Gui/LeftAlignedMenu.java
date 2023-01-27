@@ -62,10 +62,7 @@ public class LeftAlignedMenu extends JPanel {
         });
 
 
-
         welcomeLabel.add(searchBar);
-
-
 
         button1 = buttons.getIntroButton1();
         button2 = buttons.getIntroButton2();
