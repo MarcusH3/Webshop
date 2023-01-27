@@ -1,5 +1,9 @@
 package DataBaseConnections;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class DataBaseConnection {
 
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
@@ -19,3 +23,39 @@ public class DataBaseConnection {
 
 
 }
+    public static void addToCart(Integer currentCustomerOrder, Customer whoIsLoggedIn, int id) {
+        try (Connection con = createConnection();
+             CallableStatement cstmt = con.prepareCall("{CALL addToCart(?,?,?)}")){
+
+            cstmt.setInt(1, currentCustomerOrder);
+            cstmt.setInt(2, whoIsLoggedIn.getId());
+            cstmt.setInt(3, id);
+            cstmt.execute();
+
+           /*.showMessage("Added to cart", "New item added to  cart", null, Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            if (!.isLoggedIn){
+                .showMessage("Not logged in!", "You need to be logged in\nto make and order", null, Alert.AlertType.ERROR);
+            }else {
+                .showMessage("No Order", "You need to create a order first,\nbefore you can add products", null, Alert.AlertType.ERROR);
+            }
+
+        }*/
+
+        }
+        public static void removeFromCart(Integer currentCustomerOrder, Customer whoIsLoggedIn, int id) {
+
+            try (Connection con = createConnection();
+                 CallableStatement cstmt = con.prepareCall("{CALL remove_form_cart(?,?,?)}")){
+
+                cstmt.setInt(1, currentCustomerOrder);
+                cstmt.setInt(2, whoIsLoggedIn.getId());
+                cstmt.setInt(3, id);
+                cstmt.execute();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
