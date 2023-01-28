@@ -20,6 +20,42 @@ private static Properties properties;
         return con;
     }
 
+    public static ArrayList<String> getProduct(String username, String password){
+
+        ArrayList<String> products = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT product.modelName, size.euSize, inventory.inStock\n" +
+                    "FROM size\n" +
+                    "JOIN product ON size.sizeID = product.sizeID\n" +
+                    "JOIN inventory ON product.productID = inventory.productID\n" +
+                    "GROUP BY product.modelName, size.euSize, inventory.inStock;");
+
+            while(resultSet.next()){
+                String modelName = resultSet.getString("product.ModelName");
+                int size = resultSet.getInt("size.euSize");
+                int quantity = resultSet.getInt("inventory.inStock");
+
+                products.add(modelName + " " + size + " " + quantity);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return products;
+    }
+
     public static void getCustomer(String username, String password){
 
         ArrayList<Customer> customers = new ArrayList<>();
@@ -50,7 +86,6 @@ private static Properties properties;
                 customers.add(customer);
 
             }
-            System.out.println("bajs");
         }
         catch (Exception e){
             e.printStackTrace();

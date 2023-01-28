@@ -25,6 +25,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private JButton loginButton;
     private JButton exitButton;
     private JButton tempButton;
+    private JTextField searchBar;
     private Gui gui;
     private Dimension introButtonDimension;
     private GridBagConstraints gbc;
@@ -237,6 +238,40 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         introButton8.addActionListener(this);
         introButton9.addActionListener(this);
 
+        searchBar = new JTextField();
+        searchBar.setBounds(110, 108, 140, 60);
+        searchBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        searchBar.setOpaque(false);
+        searchBar.setText("Search product");
+        searchBar.setForeground(Color.WHITE);
+
+        searchBar.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (searchBar.getText().equals("Search product")) {
+                    searchBar.setText("");
+                    searchBar.setForeground(Color.white);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (searchBar.getText().isEmpty()) {
+                    searchBar.setText("Search product");
+                    searchBar.setForeground(Color.white);
+                }
+            }
+        });
+        searchBar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                stringList = new ArrayList<>();
+                String searchTerm = searchBar.getText();
+                stringList = gui.getMain().getProduct();
+                System.out.println(" v");
+            }
+        });
     }
 
     public static ImageIcon getImageIcon(String path){
@@ -468,5 +503,12 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public ArrayList<String> getStringList() {
         return stringList;
+    }
+    public Gui getGui(){
+        return gui;
+    }
+
+    public JTextField getSearchBar() {
+        return searchBar;
     }
 }

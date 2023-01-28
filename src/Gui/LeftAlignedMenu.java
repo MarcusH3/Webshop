@@ -2,11 +2,13 @@ package Gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
+import java.util.ArrayList;
 
-public class LeftAlignedMenu extends JPanel {
 
+public class LeftAlignedMenu extends JPanel{
+
+private ArrayList<String> stringList;
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -36,33 +38,9 @@ public class LeftAlignedMenu extends JPanel {
         panel1.setBounds(0,0,300,763);
         panel1.setOpaque(false);
 
-        JTextField searchBar = new JTextField();
-        searchBar.setBounds(110, 108, 140, 60);
-        searchBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
-        searchBar.setOpaque(false);
-        searchBar.setText("Search product");
-        searchBar.setForeground(Color.WHITE);
-
-        searchBar.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (searchBar.getText().equals("Search product")) {
-                    searchBar.setText("");
-                    searchBar.setForeground(Color.white);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (searchBar.getText().isEmpty()) {
-                    searchBar.setText("Search product");
-                    searchBar.setForeground(Color.white);
-                }
-            }
-        });
 
 
-        welcomeLabel.add(searchBar);
+        welcomeLabel.add(buttons.getSearchBar());
 
         button1 = buttons.getIntroButton1();
         button2 = buttons.getIntroButton2();
