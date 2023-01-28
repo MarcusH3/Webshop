@@ -86,8 +86,9 @@ public static void connectAndQueryDB(String username, String password){
         }
 }
 
-    public static void getTopFive(String username, String password){
+    public static ArrayList<String> getTopFive(String username, String password){
 
+        ArrayList<String> topFive = new ArrayList<>();
         try {
             properties = new Properties();
             InputStream input = new FileInputStream("res/config.properties");
@@ -115,16 +116,17 @@ public static void connectAndQueryDB(String username, String password){
                     "limit 5");
 
             while(resultSet.next()){
-                String firstName = resultSet.getString("product.ModelName");
-                String lastName = resultSet.getString("quantity");
+                String modelName = resultSet.getString("product.ModelName");
+                String quantity = resultSet.getString("quantity");
 
-                System.out.println(lastName+", "+firstName+"\n");
+                topFive.add(modelName + " " + quantity);
             }
 
         }
         catch (Exception e){
             e.printStackTrace();
         }
+        return topFive;
     }
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
         and provides a set of methods that the rest of the program can use to perform CRUD (Create, Read, Update, Delete)

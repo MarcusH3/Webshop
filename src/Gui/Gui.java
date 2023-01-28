@@ -16,6 +16,7 @@ public class Gui implements ActionListener {
     private JPanel categoryPanel;
     private JPanel pageNotFoundPanel;
     private JPanel leftAlignedMenu;
+    private JPanel topFiveMenu;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -54,6 +55,7 @@ public class Gui implements ActionListener {
         pageNotFoundPanel = new PageNotFound(buttons);
         genderPanel = new GenderPanel(buttons);
 
+
         //categoryPanel = new CategoryPanel(buttons);
         //
 
@@ -90,6 +92,13 @@ public class Gui implements ActionListener {
            case NOT_FOUND -> {
                introPanel.add(leftAlignedMenu);
                introPanel.add(pageNotFoundPanel);
+               introPanel.setVisible(true);
+               backPanel.add(introPanel);
+           }
+           case TOP_FIVE -> {
+               topFiveMenu = new TopFive(buttons);
+               introPanel.add(leftAlignedMenu);
+               introPanel.add(topFiveMenu);
                introPanel.setVisible(true);
                backPanel.add(introPanel);
            }

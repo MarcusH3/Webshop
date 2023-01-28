@@ -3,6 +3,7 @@ package Gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Buttons extends AbstractGui implements ActionListener, MouseListener {
     private JButton button1;
@@ -28,6 +29,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private Dimension introButtonDimension;
     private GridBagConstraints gbc;
     private State state = State.WELCOME;
+    private ArrayList<String> stringList;
 
     private State previousState;
 
@@ -264,7 +266,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     System.exit(1);
                 }
             }
-            case INTRO, NOT_FOUND -> {
+            case INTRO, NOT_FOUND, TOP_FIVE -> {
                 if(e.getSource()==button1){
                     setPreviousState(getState());
                     setState(State.WOMAN);
@@ -272,8 +274,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     System.out.println("Woman");
 
                 } else if (e.getSource()== introButton2) {
-                    gui.getMain().getTopFive();
-                    setState(State.NOT_FOUND);
+                    stringList = gui.getMain().getTopFive();
+                    setState(State.TOP_FIVE);
                     gui.updateGui();
                 }
                 else if (e.getSource()== introButton3) {
@@ -302,7 +304,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                             setState(State.WELCOME);
                             gui.updateGui();
                         }
-                        case NOT_FOUND -> {
+                        case NOT_FOUND, TOP_FIVE -> {
                             setState(State.INTRO);
                             gui.updateGui();
                         }
@@ -462,5 +464,9 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public void setPreviousState(State previousState) {
         this.previousState = previousState;
+    }
+
+    public ArrayList<String> getStringList() {
+        return stringList;
     }
 }
