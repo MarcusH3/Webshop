@@ -1,14 +1,29 @@
 package Gui;
 
+import Database.Customer;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SignUpPanel extends JPanel {
+
+    private JTextField firstNameTf;
+    private JTextField lastNameTf;
+    private JTextField emailTf;
+    private JTextField phoneNumberTf;
+    private JTextField addressTf;
+    private JTextField cityTf;
+    private Customer customer;
+    private ArrayList<Customer> customers;
     public SignUpPanel(Buttons buttons){
+
+        customer = new Customer();
 
         setBackground(Color.white);
         setLayout(new GridLayout());
@@ -41,7 +56,7 @@ public class SignUpPanel extends JPanel {
         centerBorder.setPreferredSize(new Dimension(300,421));
 
         //CENTER PANEL ELEMENTS
-        JTextField firstNameTf = new JTextField(20);
+        firstNameTf = new JTextField(20);
         firstNameTf.setText("First Name");
         firstNameTf.setForeground(Color.lightGray);
         firstNameTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -49,14 +64,14 @@ public class SignUpPanel extends JPanel {
         //firstNameTf.setPreferredSize(new Dimension(300,71));
         //firstNameTf.setMinimumSize(new Dimension(300,71));
 
-        JTextField lastNameTf = new JTextField(20);
+        lastNameTf = new JTextField(20);
         lastNameTf.setText("Last Name");
         lastNameTf.setForeground(Color.lightGray);
         lastNameTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         //lastNameTf.setPreferredSize(new Dimension(300,71));
         //lastNameTf.setMinimumSize(new Dimension(300,71));
 
-        JTextField emailTf = new JTextField(20);
+        emailTf = new JTextField(20);
         emailTf.setText("Email Address");
         emailTf.setForeground(Color.lightGray);
         emailTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -64,21 +79,21 @@ public class SignUpPanel extends JPanel {
         //emailTf.setMinimumSize(new Dimension(300,71));
 
 
-        JTextField phoneNumberTf = new JTextField(20);
+        phoneNumberTf = new JTextField(20);
         phoneNumberTf.setText("Phone number");
         phoneNumberTf.setForeground(Color.lightGray);
         phoneNumberTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         //phoneNumberTf.setPreferredSize(new Dimension(300,71));
         //phoneNumberTf.setMinimumSize(new Dimension(300,71));
 
-        JTextField addressTf = new JTextField(20);
+        addressTf = new JTextField(20);
         addressTf.setText("Address");
         addressTf.setForeground(Color.lightGray);
         addressTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         //addressTf.setPreferredSize(new Dimension(300,71));
         //addressTf.setMinimumSize(new Dimension(300,71));
 
-        JTextField cityTf = new JTextField(20);
+        cityTf = new JTextField(20);
         cityTf.setText("City");
         cityTf.setForeground(Color.lightGray);
         cityTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -120,6 +135,15 @@ public class SignUpPanel extends JPanel {
             });
         }
 
+        for(JTextField textField : textFields){
+            textField.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String temp = textField.getText();
+                    getNewCustomer(textField);                }
+            });
+        }
+
         JPasswordField passwordField1 = new JPasswordField(20);
         passwordField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         passwordField1.setText("Password");
@@ -155,6 +179,7 @@ public class SignUpPanel extends JPanel {
                 }
             });
         }
+
 
         //BOTTOM PANEL ATTRIBUTES
         JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -198,7 +223,7 @@ public class SignUpPanel extends JPanel {
         bpCenterPanel.add(bpCpCenterPanel);
         bpCenterPanel.add(bpCpBottomPanel);
 
-        // bpCenterPanel.add(buttons.getLoginButton(), BorderLayout.WEST);
+        //bpCenterPanel.add(buttons.getLoginButton(), BorderLayout.WEST);
         //bpCenterPanel.add(buttons.getExitButton(), BorderLayout.EAST);
 
         JPanel bpRightPanel = new JPanel();
@@ -340,5 +365,16 @@ public class SignUpPanel extends JPanel {
         }*/
 
     }
+    public void getNewCustomer(JTextField textField){
+        String temp = textField.getText();
+        if(textField.equals(firstNameTf)){
+            customer.setCustomerFirstName(textField.getText());
 
+        }
+        if(textField.equals(lastNameTf)){
+            customer.setCustomerLastName(textField.getText());
+
+        }
+        System.out.println("hej");
+    }
 }

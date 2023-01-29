@@ -166,6 +166,9 @@ public class Gui implements ActionListener {
     public JPanel getBackPanel() {
         return backPanel;
     }
+    public JPanel getSignUpPanel() {
+        return signUpPanel;
+    }
     public Main getMain() {
         return main;
     }

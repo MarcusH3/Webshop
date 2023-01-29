@@ -101,6 +101,8 @@ public class WelcomePanel extends JPanel{
             }
         });
 
+
+
         JPasswordField passwordField = new JPasswordField(20);
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
         passwordField.setText("Password");

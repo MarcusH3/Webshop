@@ -2,7 +2,7 @@ package Database;
 
 public class Customer {
 
-        private final int id;
+        private int id;
         private String customerFirstName ;
         private String customerLastName;
         private String customerAddress;
@@ -11,6 +11,10 @@ public class Customer {
         private String customerPhoneNumber;
         private String password;
         private int cityID;
+
+        public Customer(){
+
+        }
 
         public Customer(int id, String firstName, String lastName, String phoneNumber, String email, String password, String address, int cityID) {
             this.id = id;
