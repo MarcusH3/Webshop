@@ -26,6 +26,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private JButton exitButton;
     private JButton tempButton;
     private JButton signUpButton;
+    private JButton nextButton;
+    private JButton previousButton;
     private JTextField searchBar;
     private Gui gui;
     private Dimension introButtonDimension;
@@ -280,6 +282,12 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 System.out.println(" v");
             }
         });
+
+        nextButton = new JButton("NEXT");
+        nextButton.addActionListener(this);
+
+        previousButton = new JButton("RETURN");
+        previousButton.addActionListener(this);
     }
 
     public static ImageIcon getImageIcon(String path){
@@ -310,6 +318,16 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 }
                 if(e.getSource() == signUpButton){
                     setState(State.SIGN_UP);
+                    gui.updateGui();
+                }
+            }
+            case SIGN_UP -> {
+                if (e.getSource() == previousButton){
+                    setState(State.WELCOME);
+                    gui.updateGui();
+                }
+                if(e.getSource() == nextButton){
+                    setState(State.INTRO);
                     gui.updateGui();
                 }
             }
@@ -462,6 +480,16 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     @Override
     public JButton getSignUpButton() {
         return signUpButton;
+    }
+
+    @Override
+    public JButton getNextButton() {
+        return nextButton;
+    }
+
+    @Override
+    public JButton getPreviousButton() {
+        return previousButton;
     }
 
     @Override
