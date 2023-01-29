@@ -12,6 +12,7 @@ public class Gui implements ActionListener {
     private JPanel backPanel;
     private JPanel genderPanel;
     private JPanel welcomePanel;
+    private JPanel signUpPanel;
     private JPanel introPanel;
     private JPanel categoryPanel;
     private JPanel pageNotFoundPanel;
@@ -54,6 +55,7 @@ public class Gui implements ActionListener {
         leftAlignedMenu = new LeftAlignedMenu(buttons);
         pageNotFoundPanel = new PageNotFound(buttons);
         genderPanel = new GenderPanel(buttons);
+        signUpPanel = new SignUpPanel(buttons);
 
 
         //categoryPanel = new CategoryPanel(buttons);
@@ -81,6 +83,10 @@ public class Gui implements ActionListener {
                welcomePanel.setVisible(true);
                backPanel.add(welcomePanel);
             }
+           case SIGN_UP -> {
+               signUpPanel.setVisible(true);
+               backPanel.add(signUpPanel);
+           }
             case INTRO -> {
                 introPanel.add(leftAlignedMenu);
                 introPanel.add(genderPanel);

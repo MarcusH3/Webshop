@@ -25,6 +25,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private JButton loginButton;
     private JButton exitButton;
     private JButton tempButton;
+    private JButton signUpButton;
     private JTextField searchBar;
     private Gui gui;
     private Dimension introButtonDimension;
@@ -238,6 +239,13 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         introButton8.addActionListener(this);
         introButton9.addActionListener(this);
 
+        signUpButton = new JButton("Sign up");
+        signUpButton.setForeground(Color.CYAN);
+        signUpButton.setBorderPainted(false);
+        signUpButton.setFocusPainted(false);
+        signUpButton.setContentAreaFilled(false);
+        signUpButton.addActionListener(this);
+
         searchBar = new JTextField();
         searchBar.setBounds(110, 108, 140, 60);
         searchBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
@@ -299,6 +307,10 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                 }
                 if(e.getSource() == exitButton){
                     System.exit(1);
+                }
+                if(e.getSource() == signUpButton){
+                    setState(State.SIGN_UP);
+                    gui.updateGui();
                 }
             }
             case INTRO, NOT_FOUND, TOP_FIVE -> {
@@ -446,6 +458,10 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     @Override
     public JButton getIntroButton9() {
         return introButton9;
+    }
+    @Override
+    public JButton getSignUpButton() {
+        return signUpButton;
     }
 
     @Override

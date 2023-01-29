@@ -24,6 +24,7 @@ public abstract class AbstractGui implements ActionListener {
     public abstract JButton getIntroButton7();
     public abstract JButton getIntroButton8();
     public abstract JButton getIntroButton9();
+    public abstract JButton getSignUpButton();
 
     public abstract GridBagConstraints getGridBagConstraints();
 

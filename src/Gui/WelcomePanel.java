@@ -162,6 +162,8 @@ public class WelcomePanel extends JPanel{
         JPanel bpCpBottomPanel = new JPanel();
         bpCpBottomPanel.setPreferredSize(new Dimension(300,84));
         bpCpBottomPanel.setBackground(Color.WHITE);
+        bpCpBottomPanel.setLayout(new BorderLayout());
+        bpCpBottomPanel.add(buttons.getSignUpButton());
 
         bpCenterPanel.add(bpCpTopPanel);
         bpCenterPanel.add(bpCpCenterPanel);
@@ -207,6 +209,7 @@ public class WelcomePanel extends JPanel{
         centerPanel.add(leftBorder,BorderLayout.WEST);
         centerPanel.add(centerBorder,BorderLayout.CENTER);
         centerPanel.add(rightBorder, BorderLayout.EAST);
+
 
         bottomPanel.setBackground(Color.white);
 
