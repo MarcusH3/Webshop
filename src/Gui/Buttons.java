@@ -1,5 +1,7 @@
 package Gui;
 
+import Database.Customer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -306,12 +308,19 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         switch(getState()){
             case WELCOME -> {
                 if(e.getSource() == loginButton){
-                    setPreviousState(getState());
-                    setState(State.INTRO);
-                    gui.getBackPanel().getComponent(0).setVisible(false);
-                    gui.getBackPanel().remove(0);
-                    gui.updateGui();
-                    System.out.println("hej");
+                    ArrayList<Customer> customers = gui.getMain().getCustomer();
+                    for(Customer customer : customers){
+                        if(customer.getCustomerFirstName().equalsIgnoreCase("marcus")) {
+                            setPreviousState(getState());
+                            setState(State.INTRO);
+                            gui.getBackPanel().getComponent(0).setVisible(false);
+                            gui.getBackPanel().remove(0);
+                            gui.updateGui();
+                        }
+                        System.out.println("hej");
+                    }
+                    System.out.println("Sorry you god damn commie");
+
                 }
                 if(e.getSource() == exitButton){
                     System.exit(1);

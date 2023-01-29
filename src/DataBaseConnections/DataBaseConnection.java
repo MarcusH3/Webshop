@@ -56,7 +56,7 @@ private static Properties properties;
         return products;
     }
 
-    public static void getCustomer(String username, String password){
+    public static ArrayList<Customer> getCustomer(String username, String password){
 
         ArrayList<Customer> customers = new ArrayList<>();
         try {
@@ -90,6 +90,7 @@ private static Properties properties;
         catch (Exception e){
             e.printStackTrace();
         }
+        return customers;
     }
 
 public static void connectAndQueryDB(String username, String password){

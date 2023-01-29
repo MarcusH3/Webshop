@@ -1,5 +1,7 @@
 package DataBaseConnections;
 
+import Database.Customer;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -14,8 +16,10 @@ public class Main {
        topFive = DataBaseConnection.getTopFive("root", "marcusedlund");
        return topFive;
     }
-    public void getCustomer(){
-        DataBaseConnection.getCustomer("root", "marcusedlund");
+    public ArrayList<Customer> getCustomer(){
+        ArrayList<Customer> customers;
+        customers = DataBaseConnection.getCustomer("root", "marcusedlund");
+        return customers;
     }
     public static void main(String[] args) {
 
