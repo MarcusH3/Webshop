@@ -76,17 +76,17 @@ public class WelcomePanel extends JPanel{
         centerBorder.setPreferredSize(new Dimension(300,253));
 
         //CENTER PANEL ELEMENTS
-        JLabel usernameLabel = new JLabel("Username:");
+        JLabel emailLable = new JLabel("Email:");
         JLabel passwordLabel = new JLabel("Password:");
         JTextField textField = new JTextField(20);
-        textField.setText("Username");
+        textField.setText("Email");
         textField.setForeground(Color.lightGray);
         textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("Username")) {
+                if (textField.getText().equals("Email")) {
                     textField.setText("");
                     textField.setForeground(Color.BLACK);
                 }
@@ -95,7 +95,7 @@ public class WelcomePanel extends JPanel{
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
-                    textField.setText("Username");
+                    textField.setText("Email");
                     textField.setForeground(Color.GRAY);
                 }
             }
@@ -199,7 +199,7 @@ public class WelcomePanel extends JPanel{
         cbCenterBorder.setLayout(new BoxLayout(cbCenterBorder, BoxLayout.Y_AXIS));
 
         centerBorder.setBackground(Color.WHITE);
-        cbCenterBorder.add(usernameLabel);
+        cbCenterBorder.add(emailLable);
         cbCenterBorder.add(textField);
         cbCenterBorder.add(passwordLabel);
         cbCenterBorder.add(passwordField);
