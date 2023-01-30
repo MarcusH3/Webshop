@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class DataBaseConnection {
@@ -20,7 +21,7 @@ private static Properties properties;
         return con;
     }
 
-    public static ArrayList<String> getProduct(String username, String password){
+    public static List<String> getProduct(String username, String password){
 
         ArrayList<String> products = new ArrayList<>();
         try {
@@ -35,18 +36,11 @@ private static Properties properties;
         try(Connection con = DriverManager.getConnection(
                 properties.getProperty("urlString"), username,password)){
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT product.modelName, size.euSize, inventory.inStock\n" +
-                    "FROM size\n" +
-                    "JOIN product ON size.sizeID = product.sizeID\n" +
-                    "JOIN inventory ON product.productID = inventory.productID\n" +
-                    "GROUP BY product.modelName, size.euSize, inventory.inStock;");
+            ResultSet resultSet = statement.executeQuery("SELECT product.modelName from product");
 
             while(resultSet.next()){
                 String modelName = resultSet.getString("product.ModelName");
-                int size = resultSet.getInt("size.euSize");
-                int quantity = resultSet.getInt("inventory.inStock");
-
-                products.add(modelName + " " + size + " " + quantity);
+                products.add(modelName);
             }
 
         }
@@ -54,6 +48,68 @@ private static Properties properties;
             e.printStackTrace();
         }
         return products;
+    }
+    public static List<String> getSizeByProduct(String username, String password, String productName){
+
+        List<String> size = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT size.euSize FROM size " +
+                    "JOIN product " +
+                    "ON product.sizeID = size.sizeID " +
+                    "WHERE product.modelName = '" + productName + "'");
+
+            while(resultSet.next()){
+                String euSize = resultSet.getString("size.euSize");
+                size.add(euSize);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return size;
+    }
+    public static List<String> getColorByProduct(String username, String password, String productName){
+
+        List<String> color = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT color.colorName FROM color " +
+                    "JOIN product " +
+                    "ON product.colorID = color.colorID " +
+                    "WHERE product.modelName = '" + productName + "'");
+
+            while(resultSet.next()){
+                String colorName = resultSet.getString("color.colorName");
+                color.add(colorName);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return color;
     }
 
     public static ArrayList<Customer> getCustomer(String username, String password){

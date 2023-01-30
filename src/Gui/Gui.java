@@ -18,6 +18,7 @@ public class Gui implements ActionListener {
     private JPanel pageNotFoundPanel;
     private JPanel leftAlignedMenu;
     private JPanel topFiveMenu;
+    private JPanel productPanel;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -108,6 +109,13 @@ public class Gui implements ActionListener {
                introPanel.setVisible(true);
                backPanel.add(introPanel);
            }
+           case PRODUCTS -> {
+               productPanel = new ProductPanel(buttons);
+               introPanel.add(leftAlignedMenu);
+               introPanel.add(productPanel);
+               introPanel.setVisible(true);
+               backPanel.add(introPanel);
+           }
             case WOMAN, MAN, UNISEX -> {
                 genderPanel.setVisible(false);
                 backPanel.remove(genderPanel);
@@ -169,6 +177,7 @@ public class Gui implements ActionListener {
     public JPanel getSignUpPanel() {
         return signUpPanel;
     }
+    public JPanel getProductPanel(){return productPanel;}
     public Main getMain() {
         return main;
     }

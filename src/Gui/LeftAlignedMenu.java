@@ -3,12 +3,12 @@ package Gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class LeftAlignedMenu extends JPanel{
 
-private ArrayList<String> stringList;
+private List<String> stringList;
     private JTextField searchBar;
     private JButton button1;
     private JButton button2;
@@ -48,7 +48,6 @@ private ArrayList<String> stringList;
 
         new JTextFieldManipulator(searchBar);
         searchBar.addActionListener(e->{
-            stringList = new ArrayList<>();
             String searchTerm = searchBar.getText();
 
             stringList = buttons.getGui().getMain().getProduct();

@@ -304,7 +304,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     gui.updateGui();
                 }
             }
-            case INTRO, NOT_FOUND, TOP_FIVE -> {
+            case INTRO, NOT_FOUND, TOP_FIVE, PRODUCTS -> {
                 if(e.getSource()==button1){
                     setPreviousState(getState());
                     setState(State.WOMAN);
@@ -326,7 +326,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     setPreviousState(getState());
                     System.out.println("EXPLORE");
                     gui.getMain().getCustomer();
-                    setState(State.NOT_FOUND);
+                    setState(State.PRODUCTS);
                     gui.updateGui();
                 }
                 else if (e.getSource()== introButton5) {
