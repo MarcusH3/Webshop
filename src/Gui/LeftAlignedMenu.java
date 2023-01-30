@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class LeftAlignedMenu extends JPanel{
 
 private ArrayList<String> stringList;
+    private JTextField searchBar;
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -38,9 +39,25 @@ private ArrayList<String> stringList;
         panel1.setBounds(0,0,300,763);
         panel1.setOpaque(false);
 
+        searchBar = new JTextField();
+        searchBar.setBounds(110, 108, 140, 60);
+        searchBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+        searchBar.setOpaque(false);
+        searchBar.setText("Search product");
+        searchBar.setForeground(Color.WHITE);
 
+        new JTextFieldManipulator(searchBar);
+        new JTextFieldManipulator(searchBar).initActionListener(searchBar, e -> {
+            stringList = new ArrayList<>();
+            String searchTerm = searchBar.getText();
 
-        welcomeLabel.add(buttons.getSearchBar());
+            stringList = buttons.getGui().getMain().getProduct();
+            System.out.println(" v");
+            searchBar.setText("Search Product");
+            searchBar.setForeground(Color.WHITE);
+        });
+
+        welcomeLabel.add(searchBar);
 
         button1 = buttons.getIntroButton1();
         button2 = buttons.getIntroButton2();

@@ -250,41 +250,6 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         signUpButton.setContentAreaFilled(false);
         signUpButton.addActionListener(this);
 
-        searchBar = new JTextField();
-        searchBar.setBounds(110, 108, 140, 60);
-        searchBar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
-        searchBar.setOpaque(false);
-        searchBar.setText("Search product");
-        searchBar.setForeground(Color.WHITE);
-
-        searchBar.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (searchBar.getText().equals("Search product")) {
-                    searchBar.setText("");
-                    searchBar.setForeground(Color.white);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (searchBar.getText().isEmpty()) {
-                    searchBar.setText("Search product");
-                    searchBar.setForeground(Color.white);
-                }
-            }
-        });
-        searchBar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                stringList = new ArrayList<>();
-                String searchTerm = searchBar.getText();
-                stringList = gui.getMain().getProduct();
-                System.out.println(" v");
-            }
-        });
-
         nextButton = new JButton("NEXT");
         nextButton.addActionListener(this);
 
@@ -317,7 +282,6 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                             gui.getBackPanel().remove(0);
                             gui.updateGui();
                         }
-                        System.out.println("hej");
                     }
                     System.out.println("Sorry you god damn commie");
 

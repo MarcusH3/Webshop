@@ -83,25 +83,10 @@ public class WelcomePanel extends JPanel{
         textField.setForeground(Color.lightGray);
         textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
-        textField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (textField.getText().equals("Username")) {
-                    textField.setText("");
-                    textField.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (textField.getText().isEmpty()) {
-                    textField.setText("Username");
-                    textField.setForeground(Color.GRAY);
-                }
-            }
+        new JTextFieldManipulator(textField);
+        new JTextFieldManipulator(textField).initActionListener(textField, e->{
+            System.out.println(textField.getText());
         });
-
-
 
         JPasswordField passwordField = new JPasswordField(20);
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -109,24 +94,10 @@ public class WelcomePanel extends JPanel{
         passwordField.setForeground(Color.lightGray);
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
-        passwordField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (passwordField.getText().equals("Password")) {
-                    passwordField.setText("");
-                    passwordField.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (passwordField.getText().isEmpty()) {
-                    passwordField.setText("Password");
-                    passwordField.setForeground(Color.GRAY);
-                }
-            }
+        new JTextFieldManipulator(passwordField);
+        new JTextFieldManipulator(passwordField).initActionListener(passwordField, e->{
+            System.out.println(passwordField.getText());
         });
-
 
         //BOTTOM PANEL ATTRIBUTES
         JPanel bottomPanel = new JPanel(new BorderLayout());
