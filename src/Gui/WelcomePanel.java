@@ -76,10 +76,10 @@ public class WelcomePanel extends JPanel{
         centerBorder.setPreferredSize(new Dimension(300,253));
 
         //CENTER PANEL ELEMENTS
-        JLabel usernameLabel = new JLabel("Username:");
+        JLabel emailLable = new JLabel("Email:");
         JLabel passwordLabel = new JLabel("Password:");
         JTextField textField = new JTextField(20);
-        textField.setText("Username");
+        textField.setText("Email");
         textField.setForeground(Color.lightGray);
         textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
@@ -87,6 +87,8 @@ public class WelcomePanel extends JPanel{
         new JTextFieldManipulator(textField).initActionListener(textField, e->{
             System.out.println(textField.getText());
         });
+
+
 
         JPasswordField passwordField = new JPasswordField(20);
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -98,6 +100,7 @@ public class WelcomePanel extends JPanel{
         new JTextFieldManipulator(passwordField).initActionListener(passwordField, e->{
             System.out.println(passwordField.getText());
         });
+
 
         //BOTTOM PANEL ATTRIBUTES
         JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -170,7 +173,7 @@ public class WelcomePanel extends JPanel{
         cbCenterBorder.setLayout(new BoxLayout(cbCenterBorder, BoxLayout.Y_AXIS));
 
         centerBorder.setBackground(Color.WHITE);
-        cbCenterBorder.add(usernameLabel);
+        cbCenterBorder.add(emailLable);
         cbCenterBorder.add(textField);
         cbCenterBorder.add(passwordLabel);
         cbCenterBorder.add(passwordField);
