@@ -16,7 +16,7 @@ public class JTextFieldManipulator{
     public JTextFieldManipulator(JTextComponent component) {
         initFocusListener(component);
     }
-public void initFocusListener(JTextComponent component){
+    public void initFocusListener(JTextComponent component){
 
     temp = component.getText();
 
@@ -36,22 +36,4 @@ public void initFocusListener(JTextComponent component){
         }
     });
 }
-    public void initActionListener(JTextComponent component, Consumer<ActionEvent> action){
-        if(component instanceof JTextField){
-            ((JTextField) component).addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    action.accept(e);
-                }
-            });
-        }
-        if(component instanceof JPasswordField) {
-            ((JPasswordField) component).addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    action.accept(e);
-                }
-            });
-        }
-    }
 }

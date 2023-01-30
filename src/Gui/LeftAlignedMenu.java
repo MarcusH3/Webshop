@@ -47,7 +47,7 @@ private ArrayList<String> stringList;
         searchBar.setForeground(Color.WHITE);
 
         new JTextFieldManipulator(searchBar);
-        new JTextFieldManipulator(searchBar).initActionListener(searchBar, e -> {
+        searchBar.addActionListener(e->{
             stringList = new ArrayList<>();
             String searchTerm = searchBar.getText();
 
@@ -56,7 +56,6 @@ private ArrayList<String> stringList;
             searchBar.setText("Search Product");
             searchBar.setForeground(Color.WHITE);
         });
-
         welcomeLabel.add(searchBar);
 
         button1 = buttons.getIntroButton1();

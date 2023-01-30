@@ -84,7 +84,7 @@ public class WelcomePanel extends JPanel{
         textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
         new JTextFieldManipulator(textField);
-        new JTextFieldManipulator(textField).initActionListener(textField, e->{
+        textField.addActionListener(e->{
             System.out.println(textField.getText());
         });
 
@@ -97,10 +97,10 @@ public class WelcomePanel extends JPanel{
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
 
         new JTextFieldManipulator(passwordField);
-        new JTextFieldManipulator(passwordField).initActionListener(passwordField, e->{
+
+        passwordField.addActionListener(e -> {
             System.out.println(passwordField.getText());
         });
-
 
         //BOTTOM PANEL ATTRIBUTES
         JPanel bottomPanel = new JPanel(new BorderLayout());

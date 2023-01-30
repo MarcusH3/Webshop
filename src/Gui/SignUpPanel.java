@@ -102,8 +102,7 @@ public class SignUpPanel extends JPanel {
         //cityTf.setPreferredSize(new Dimension(300,71));
         //cityTf.setMinimumSize(new Dimension(300,71));
 
-        List<JTextField> textFields1 = new ArrayList<>();
-        ArrayList<JTextField> textFields = new ArrayList<>();
+        List<JTextField> textFields = new ArrayList<>();
         textFields.add(firstNameTf);
         textFields.add(lastNameTf);
         textFields.add(emailTf);
@@ -112,9 +111,11 @@ public class SignUpPanel extends JPanel {
         textFields.add(cityTf);
 
         textFields.forEach(textField -> new JTextFieldManipulator(textField));
-        textFields.forEach(textField -> new JTextFieldManipulator(textField).initActionListener(textField, e->{
+
+        textFields.forEach(textField -> textField.addActionListener(e->{
             System.out.println(textField.getText());
         }));
+
 
         JPasswordField passwordField1 = new JPasswordField(20);
         passwordField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -131,6 +132,9 @@ public class SignUpPanel extends JPanel {
         passwordFields.add(passwordField2);
 
         passwordFields.forEach(passwordField -> new JTextFieldManipulator(passwordField));
+        passwordFields.forEach(passwordField -> passwordField.addActionListener(e->{
+            System.out.println(passwordField.getText());
+        }));
 
         //BOTTOM PANEL ATTRIBUTES
         JPanel bottomPanel = new JPanel(new BorderLayout());
