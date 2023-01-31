@@ -1,4 +1,4 @@
-package Gui;
+package Utilities;
 
 public enum State {
     WELCOME, INTRO, NOT_FOUND, WAIT ,WOMAN, MAN, UNISEX,SNEAKER,SANDAL,SLIPPER,TOP_FIVE, SIGN_UP, PRODUCTS;

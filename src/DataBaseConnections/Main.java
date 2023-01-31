@@ -6,6 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+    public List<String> getProductByCategory(String gender, String category){
+        List<String> products = new ArrayList<>();
+        products = DataBaseConnection.getModelByCategory("root", "marcusedlund", gender, category);
+        return products;
+    }
+    public List<String> getCategoryByGender(String gender){
+        List<String> categories = new ArrayList<>();
+        categories = DataBaseConnection.getCategoryByGender("root", "marcusedlund", gender);
+        return categories;
+    }
+    public List<String> getGender(){
+        List<String> genders = new ArrayList<>();
+        genders = DataBaseConnection.getGender("root", "marcusedlund");
+        return genders;
+    }
+
     public List<String> getColorByProduct(String productName){
         List<String> products = new ArrayList<>();
         products = DataBaseConnection.getColorByProduct("root", "marcusedlund", productName);

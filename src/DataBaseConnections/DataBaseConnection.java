@@ -21,6 +21,109 @@ private static Properties properties;
         return con;
     }
 
+    public static List<String> getModelByCategory(String username, String password, String gender, String category){
+
+        List<String> products = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT product.modelName\n" +
+                    "FROM subcategory\n" +
+                    "JOIN \n" +
+                    "category \n" +
+                    "on category.subcategoryID = subcategory.subCategoryID\n" +
+                    "join gendercategory\n" +
+                    "on category.genderCategoryID = gendercategory.genderCategoryID\n" +
+                    "join product\n" +
+                    "on product.categoryID = category.categoryID\n" +
+                    "and product.categoryID = category.categoryID\n" +
+                    "where gendercategory.genderCategoryName = '" + gender + "' and subcategory.subCategoryName = '" + category +"'");
+
+            while(resultSet.next()){
+                String model = resultSet.getString("product.modelName");
+                products.add(model);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    public static List<String> getCategoryByGender(String username, String password, String gender){
+
+        List<String> categories = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT subcategory.subcategoryName\n" +
+                    "FROM subcategory\n" +
+                    "JOIN \n" +
+                    "category \n" +
+                    "on category.subcategoryID = subcategory.subCategoryID\n" +
+                    "join gendercategory\n" +
+                    "on category.genderCategoryID = gendercategory.genderCategoryID\n" +
+                    "where genderCategoryName = '" + gender + "'");
+
+            while(resultSet.next()){
+                String category = resultSet.getString("subcategory.subcategoryName");
+                categories.add(category);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return categories;
+    }
+    public static List<String> getGender(String username, String password){
+
+        List<String> genderList = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT genderCategory.genderCategoryName from genderCategory");
+
+            while(resultSet.next()){
+                String gender = resultSet.getString("genderCategory.genderCategoryName");
+                genderList.add(gender);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return genderList;
+    }
+
     public static List<String> getProduct(String username, String password){
 
         ArrayList<String> products = new ArrayList<>();

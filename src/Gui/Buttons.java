@@ -1,6 +1,7 @@
 package Gui;
 
 import Database.Customer;
+import Utilities.State;
 
 import javax.swing.*;
 import java.awt.*;

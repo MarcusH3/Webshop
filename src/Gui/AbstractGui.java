@@ -1,5 +1,7 @@
 package Gui;
 
+import Utilities.State;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
