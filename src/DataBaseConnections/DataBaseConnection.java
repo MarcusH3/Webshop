@@ -323,6 +323,41 @@ public static void connectAndQueryDB(String username, String password){
         }
         return topFive;
     }
+
+    public static List<City> getCity(String username, String password){
+
+
+        List<City> cityList = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT city.cityId, city.cityName from city");
+
+            while(resultSet.next()){
+                int cityID = resultSet.getInt("city.cityID");
+                String cityName = resultSet.getString("city.cityName");
+
+                City city = new City();
+                city.setCityID(cityID);
+                city.setCityName(cityName);
+                cityList.add(city);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return cityList;
+    }
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
         and provides a set of methods that the rest of the program can use to perform CRUD (Create, Read, Update, Delete)
         operations on the data.

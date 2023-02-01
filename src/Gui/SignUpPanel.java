@@ -1,12 +1,16 @@
 package Gui;
 
+import Database.City;
 import Database.Customer;
 import Utilities.JTextFieldManipulator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SignUpPanel extends JPanel {
 
@@ -18,8 +22,17 @@ public class SignUpPanel extends JPanel {
     private JTextField cityTf;
     private Customer customer;
     private ArrayList<Customer> customers;
-    public SignUpPanel(Buttons buttons){
+    private final String firstName = "First Name";
+    private final String lastName = "Last Name";
+    private final String eMail = "Email Address";
+    private final String phoneNumber = "Phone number";
+    private final String address = "Address";
+    private final String city = "City";
+    private String tempCity;
+    private Buttons buttons;
 
+    public SignUpPanel(Buttons buttons){
+        this.buttons = buttons;
         customer = new Customer();
 
         setBackground(Color.white);
@@ -54,48 +67,11 @@ public class SignUpPanel extends JPanel {
 
         //CENTER PANEL ELEMENTS
         firstNameTf = new JTextField(20);
-        firstNameTf.setText("First Name");
-        firstNameTf.setForeground(Color.lightGray);
-        firstNameTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        firstNameTf.setMinimumSize(new Dimension(300,71));
-        //firstNameTf.setPreferredSize(new Dimension(300,71));
-        //firstNameTf.setMinimumSize(new Dimension(300,71));
-
         lastNameTf = new JTextField(20);
-        lastNameTf.setText("Last Name");
-        lastNameTf.setForeground(Color.lightGray);
-        lastNameTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        //lastNameTf.setPreferredSize(new Dimension(300,71));
-        //lastNameTf.setMinimumSize(new Dimension(300,71));
-
         emailTf = new JTextField(20);
-        emailTf.setText("Email Address");
-        emailTf.setForeground(Color.lightGray);
-        emailTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        //emailTf.setPreferredSize(new Dimension(300,71));
-        //emailTf.setMinimumSize(new Dimension(300,71));
-
-
         phoneNumberTf = new JTextField(20);
-        phoneNumberTf.setText("Phone number");
-        phoneNumberTf.setForeground(Color.lightGray);
-        phoneNumberTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        //phoneNumberTf.setPreferredSize(new Dimension(300,71));
-        //phoneNumberTf.setMinimumSize(new Dimension(300,71));
-
         addressTf = new JTextField(20);
-        addressTf.setText("Address");
-        addressTf.setForeground(Color.lightGray);
-        addressTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        //addressTf.setPreferredSize(new Dimension(300,71));
-        //addressTf.setMinimumSize(new Dimension(300,71));
-
         cityTf = new JTextField(20);
-        cityTf.setText("City");
-        cityTf.setForeground(Color.lightGray);
-        cityTf.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        //cityTf.setPreferredSize(new Dimension(300,71));
-        //cityTf.setMinimumSize(new Dimension(300,71));
 
         List<JTextField> textFields = new ArrayList<>();
         textFields.add(firstNameTf);
@@ -105,26 +81,61 @@ public class SignUpPanel extends JPanel {
         textFields.add(addressTf);
         textFields.add(cityTf);
 
+        for(JTextField textField : textFields){
+            if(textField == firstNameTf){
+                firstNameTf.setText(firstName);
+            }
+            if(textField == lastNameTf){
+                lastNameTf.setText(lastName);
+
+            }
+            if(textField == emailTf){
+                emailTf.setText(eMail);
+
+            }
+            if(textField == phoneNumberTf){
+                phoneNumberTf.setText(phoneNumber);
+
+            }
+            if(textField == addressTf){
+                addressTf.setText(address);
+
+            }
+            if(textField == cityTf){
+                cityTf.setText(city);
+
+            }
+            textField.setForeground(Color.lightGray);
+            textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+            textField.setMinimumSize(new Dimension(300,71));
+        }
+
+
+
         textFields.forEach(textField -> new JTextFieldManipulator(textField));
 
         textFields.forEach(textField -> textField.addActionListener(e->{
             System.out.println(textField.getText());
         }));
 
-
         JPasswordField passwordField1 = new JPasswordField(20);
-        passwordField1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        passwordField1.setText("Password");
-        passwordField1.setForeground(Color.lightGray);
-
         JPasswordField passwordField2 = new JPasswordField(20);
-        passwordField2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-        passwordField2.setText("Re-enter Password");
-        passwordField2.setForeground(Color.lightGray);
 
         List<JPasswordField> passwordFields = new ArrayList<>();
         passwordFields.add(passwordField1);
         passwordFields.add(passwordField2);
+
+        for(JPasswordField passwordField : passwordFields){
+            if(passwordField == passwordField1){
+                passwordField1.setText("Password");
+            }
+            if(passwordField == passwordField2){
+                passwordField2.setText("Re-enter Password");
+
+            }
+            passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+            passwordField.setForeground(Color.lightGray);
+        }
 
         passwordFields.forEach(passwordField -> new JTextFieldManipulator(passwordField));
         passwordFields.forEach(passwordField -> passwordField.addActionListener(e->{
@@ -228,20 +239,90 @@ public class SignUpPanel extends JPanel {
         backgroundPanel.add(centerPanel);
         backgroundPanel.add(bottomPanel);
 
+        nextButton.addActionListener(e->{
+            for(JTextField textField : textFields){
+                if(textField.getText() == null || Objects.equals(textField.getText(), firstName) ||
+                        Objects.equals(textField.getText(), lastName) || Objects.equals(textField.getText(), eMail) ||
+                        Objects.equals(textField.getText(), phoneNumber) || Objects.equals(textField.getText(), address) ||
+                        Objects.equals(textField.getText(), city)){
+                        textField.setForeground(Color.RED);
+                }
+                else{
+                    setNewCustomer(textField);
+                }
+
+            }
+            for(JPasswordField passwordField : passwordFields){
+                if(passwordField.getText() == null || passwordField.getText().isEmpty()){
+                    passwordField.setForeground(Color.RED);
+                }
+            }
+            if(!passwordField1.getText().equals(passwordField2.getText())||
+                    passwordField1.getText() == null || passwordField1.getText().isEmpty()||
+                    passwordField2.getText() == null || passwordField2.getText().isEmpty()){
+                passwordField1.setForeground(Color.RED);
+                passwordField2.setForeground(Color.RED);
+            }
+            else if (passwordField1.getText().equals(passwordField2.getText())) {
+                setNewCustomerPassword(passwordField1);
+            }
+        });
+
         add(leftPanel);
         add(backgroundPanel);
 
     }
-    public void getNewCustomer(JTextField textField){
-        String temp = textField.getText();
+    public void setNewCustomer(JTextField textField){
         if(textField.equals(firstNameTf)){
             customer.setCustomerFirstName(textField.getText());
-
         }
         if(textField.equals(lastNameTf)){
             customer.setCustomerLastName(textField.getText());
-
         }
-        System.out.println("hej");
+        if(textField.equals(emailTf)){
+            customer.setCustomerEMail(textField.getText());
+        }
+        if(textField.equals(phoneNumberTf)){
+            customer.setCustomerPhoneNumber(textField.getText());
+        }
+        if(textField.equals(addressTf)){
+            customer.setCustomerAddress(textField.getText());
+        }
+        if(textField.equals(cityTf)) {
+            String targetCityName = cityTf.getText();
+            List<City> cities = buttons.getGui().getMain().getCity();
+
+            boolean doOperation = true;
+            while (doOperation) {
+                boolean matchFound = cityNameMatch(targetCityName, cities);
+                if (matchFound) {
+                    System.out.println("Match found: " + targetCityName);
+                    Optional<City> cityObject = cities.stream().filter(city -> city.getCityName().equalsIgnoreCase(targetCityName)).findFirst();
+                    if (cityObject.isPresent()) {
+                        int cityID = cityObject.get().getCityID();
+                        customer.setCityID(cityID);
+                        doOperation = false;
+                    }
+
+                } else {
+
+                    //add insert to City tabble
+                    System.out.println("No match found for: " + targetCityName);
+                }
+            }
+        }
+    }
+    public void setNewCustomerPassword(JPasswordField passwordField){
+        customer.setPassword(passwordField.getText());
+    }
+    public boolean cityNameMatch(String targetCityName, List<City> cities){
+        cities = buttons.getGui().getMain().getCity();
+
+        if(cities.stream().anyMatch(city -> city.getCityName().equalsIgnoreCase(targetCityName))){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

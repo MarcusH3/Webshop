@@ -252,7 +252,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         signUpButton.addActionListener(this);
 
         nextButton = new JButton("NEXT");
-        nextButton.addActionListener(this);
+        //nextButton.addActionListener(this);
 
         previousButton = new JButton("RETURN");
         previousButton.addActionListener(this);

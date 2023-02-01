@@ -131,9 +131,6 @@ public class Gui implements ActionListener {
             component.setVisible(true);
         }
     }
-    public static void main(String[] args) {
-        gui = Gui.getInstance();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

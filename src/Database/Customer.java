@@ -99,11 +99,11 @@ public class Customer {
         this.password = password;
     }
 
-/*    public City getCity() {
-        return city;
+   public int getCityID() {
+        return cityID;
     }
 
-    public void setCity(City city) {
-        this.city = city;
-    }*/
+    public void setCityID(int cityID) {
+        this.cityID = cityID;
+    }
 }

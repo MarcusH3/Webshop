@@ -23,4 +23,17 @@ public class City {
                 '}';
 
     }
+
+    public int getCityID() {
+        return cityID;
+    }
+
+    public void setCityID(int cityID) {
+        this.cityID = cityID;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
 }

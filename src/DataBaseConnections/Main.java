@@ -1,12 +1,19 @@
 package DataBaseConnections;
 
+import Database.City;
 import Database.Customer;
+import Gui.Gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
+    public List<City> getCity(){
+        List<City> city = new ArrayList<>();
+        city = DataBaseConnection.getCity("root", "marcusedlund");
+        return city;
+    }
     public List<String> getProductByCategory(String gender, String category){
         List<String> products = new ArrayList<>();
         products = DataBaseConnection.getModelByCategory("root", "marcusedlund", gender, category);
@@ -49,7 +56,7 @@ public class Main {
         return customers;
     }
     public static void main(String[] args) {
-
+       Gui.getInstance();
     }
 
 }
