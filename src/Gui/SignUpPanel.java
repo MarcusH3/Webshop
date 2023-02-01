@@ -251,9 +251,9 @@ public class SignUpPanel extends JPanel {
                     textField.setForeground(Color.RED);
                     counter--;
                 }
-                if(counter == textFields.size()){
-                    setNewCustomer(textField);
-                    isTextFieldReady = true;
+                if(counter == textFields.size()-1){
+                    setNewCustomer(textFields);
+
                 }
                 counter++;
             }
@@ -283,57 +283,61 @@ public class SignUpPanel extends JPanel {
 
     }
 
-    public void setNewCustomer(JTextField textField) {
-        if (textField.equals(firstNameTf)) {
-            customer.setCustomerFirstName(textField.getText());
-        }
-        if (textField.equals(lastNameTf)) {
-            customer.setCustomerLastName(textField.getText());
-        }
-        if (textField.equals(emailTf)) {
-            String targetEmail = emailTf.getText();
-            List<Customer> customerList = buttons.getGui().getMain().getCustomer();
-            boolean emailMatchFound = emailMatch(targetEmail, customerList);
-            if (emailMatchFound) {
-                System.out.println("Match found: " + targetEmail);
-                return;
-
-            } else {
-                customer.setCustomerEMail(textField.getText());
+    public void setNewCustomer(List<JTextField> textFields) {
+        for(JTextField textField : textFields) {
+            if (textField.equals(firstNameTf)) {
+                customer.setCustomerFirstName(textField.getText());
             }
-        }
-        if (textField.equals(phoneNumberTf)) {
-            customer.setCustomerPhoneNumber(textField.getText());
-        }
-        if (textField.equals(addressTf)) {
-            customer.setCustomerAddress(textField.getText());
-        }
-        if (textField.equals(cityTf)) {
-            String targetCityName = cityTf.getText();
-            List<City> cities = buttons.getGui().getMain().getCity();
-
-            boolean doOperation = true;
-            while (doOperation) {
-                boolean matchFound = cityNameMatch(targetCityName, cities);
-                if (matchFound) {
-                    System.out.println("Match found: " + targetCityName);
-                    Optional<City> cityObject = cities.stream().filter(city -> city.getCityName().equalsIgnoreCase(targetCityName)).findFirst();
-                    if (cityObject.isPresent()) {
-                        int cityID = cityObject.get().getCityID();
-                        customer.setCityID(cityID);
-                        doOperation = false;
-                    }
+            if (textField.equals(lastNameTf)) {
+                customer.setCustomerLastName(textField.getText());
+            }
+            if (textField.equals(emailTf)) {
+                String targetEmail = emailTf.getText();
+                List<Customer> customerList = buttons.getGui().getMain().getCustomer();
+                boolean emailMatchFound = emailMatch(targetEmail, customerList);
+                if (emailMatchFound) {
+                    System.out.println("Match found: " + targetEmail);
+                    emailTf.setForeground(Color.RED);
+                    return;
 
                 } else {
-                    System.out.println("No match found for: " + targetCityName);
+                    customer.setCustomerEMail(textField.getText());
+                }
+            }
+            if (textField.equals(phoneNumberTf)) {
+                customer.setCustomerPhoneNumber(textField.getText());
+            }
+            if (textField.equals(addressTf)) {
+                customer.setCustomerAddress(textField.getText());
+            }
+            if (textField.equals(cityTf)) {
+                String targetCityName = cityTf.getText();
+                List<City> cities = buttons.getGui().getMain().getCity();
 
-                    City city = new City();
-                    city.setCityName(targetCityName);
-                    buttons.getGui().getMain().insertNewCity(city);
-                    cities = buttons.getGui().getMain().getCity();
+                boolean doOperation = true;
+                while (doOperation) {
+                    boolean matchFound = cityNameMatch(targetCityName, cities);
+                    if (matchFound) {
+                        System.out.println("Match found: " + targetCityName);
+                        Optional<City> cityObject = cities.stream().filter(city -> city.getCityName().equalsIgnoreCase(targetCityName)).findFirst();
+                        if (cityObject.isPresent()) {
+                            int cityID = cityObject.get().getCityID();
+                            customer.setCityID(cityID);
+                            doOperation = false;
+                        }
+
+                    } else {
+                        System.out.println("No match found for: " + targetCityName);
+
+                        City city = new City();
+                        city.setCityName(targetCityName);
+                        buttons.getGui().getMain().insertNewCity(city);
+                        cities = buttons.getGui().getMain().getCity();
+                    }
                 }
             }
         }
+        isTextFieldReady = true;
     }
 
     public void setNewCustomerPassword(JPasswordField passwordField) {
@@ -353,7 +357,7 @@ public class SignUpPanel extends JPanel {
     public boolean emailMatch(String targetCityName, List<Customer> customers) {
         customers = buttons.getGui().getMain().getCustomer();
 
-        if (customers.stream().anyMatch(city -> customer.getEmail().equalsIgnoreCase(targetCityName))) {
+        if (customers.stream().anyMatch(customer -> customer.getEmail().equalsIgnoreCase(targetCityName))) {
             return true;
         } else {
             return false;
