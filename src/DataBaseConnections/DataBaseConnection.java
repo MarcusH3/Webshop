@@ -13,7 +13,12 @@ import java.util.Properties;
 
 public class DataBaseConnection {
 private Connection con;
-private static Properties properties;
+private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (customerFirstName, CustomerLastName" +
+        ",customerAddress,customerEmail,customerPassword,customerPhoneNumber,CityID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String INSERT_CITY_SQL = "INSERT INTO city (cityName) VALUES (?)";
+
+    private static Properties properties;
 
 
     public static Connection createConnection(){
@@ -357,6 +362,61 @@ public static void connectAndQueryDB(String username, String password){
             e.printStackTrace();
         }
         return cityList;
+    }
+
+    public static void insertCustomer(String username, String password, Customer customer){
+
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        };
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+
+
+                PreparedStatement preparedStatement = con.prepareStatement(INSERT_CUSTOMER_SQL);{
+                preparedStatement.setString(1, customer.getCustomerFirstName());
+                preparedStatement.setString(2, customer.getCustomerLastName());
+                preparedStatement.setString(3, customer.getCustomerAddress());
+                preparedStatement.setString(4, customer.getEmail());
+                preparedStatement.setString(5, customer.getPassword());
+                preparedStatement.setString(6, customer.getCustomerPhoneNumber());
+                preparedStatement.setInt(7, customer.getCityID());
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void insertCity(String username, String password, City City){
+
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        };
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+
+
+            PreparedStatement preparedStatement = con.prepareStatement(INSERT_CITY_SQL);{
+                preparedStatement.setString(1, City.getCityName());
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
         and provides a set of methods that the rest of the program can use to perform CRUD (Create, Read, Update, Delete)

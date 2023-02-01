@@ -9,6 +9,13 @@ import java.util.List;
 
 public class Main {
 
+    public void insertNewCity(City city){
+        DataBaseConnection.insertCity("root","marcusedlund", city);
+    }
+    public void insertNewCustomer(Customer customer){
+        DataBaseConnection.insertCustomer("root","marcusedlund", customer);
+    }
+
     public List<City> getCity(){
         List<City> city = new ArrayList<>();
         city = DataBaseConnection.getCity("root", "marcusedlund");

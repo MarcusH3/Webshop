@@ -3,6 +3,7 @@ package Gui;
 import Database.City;
 import Database.Customer;
 import Utilities.JTextFieldManipulator;
+import Utilities.State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,8 @@ public class SignUpPanel extends JPanel {
     private final String city = "City";
     private String tempCity;
     private Buttons buttons;
+    private boolean isTextFieldReady = false;
+    private boolean isPasswordFieldReady = false;
 
     public SignUpPanel(Buttons buttons){
         this.buttons = buttons;
@@ -249,6 +252,7 @@ public class SignUpPanel extends JPanel {
                 }
                 else{
                     setNewCustomer(textField);
+                    isTextFieldReady = true;
                 }
 
             }
@@ -265,9 +269,15 @@ public class SignUpPanel extends JPanel {
             }
             else if (passwordField1.getText().equals(passwordField2.getText())) {
                 setNewCustomerPassword(passwordField1);
+                isPasswordFieldReady = true;
+            }
+            if(isTextFieldReady && isPasswordFieldReady){
+                customer.getCityID();
+                buttons.getGui().getMain().insertNewCustomer(customer);
+                buttons.setState(State.INTRO);
+                buttons.getGui().updateGui();
             }
         });
-
         add(leftPanel);
         add(backgroundPanel);
 
@@ -305,9 +315,12 @@ public class SignUpPanel extends JPanel {
                     }
 
                 } else {
-
-                    //add insert to City tabble
                     System.out.println("No match found for: " + targetCityName);
+
+                    City city = new City();
+                    city.setCityName(targetCityName);
+                    buttons.getGui().getMain().insertNewCity(city);
+                    cities = buttons.getGui().getMain().getCity();
                 }
             }
         }
