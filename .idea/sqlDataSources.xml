@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="ea9fd5c2-1fef-454c-85b0-61c448325a31" name="@localhost Mapping">
+      <data-sources db="f322ebf9-1ed9-4910-8f7e-e616cee395c6" ddl="cf4ddaf5-5727-48c2-8087-f0f55836f230" />
+    </mapping>
+    <mapping uuid="8e4d0bc7-5723-44aa-8a88-80c3ab94e5dd" name="myseconddatabase@localhost Mapping">
+      <data-sources db="f0c8c071-e71a-4426-926d-9500ffa07517" ddl="d05045ba-54dc-4e54-b670-a77208c38770" />
+      <scope>
+        <node kind="schema" qname="myseconddatabase" />
+      </scope>
+    </mapping>
+  </component>
+</project>

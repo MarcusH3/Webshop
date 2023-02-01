@@ -1,15 +1,17 @@
 package Gui;
 
+import Database.Product;
 import Utilities.JTextFieldManipulator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class LeftAlignedMenu extends JPanel{
 
-private List<String> stringList;
+private ArrayList<Product> stringList;
     private JTextField searchBar;
     private JButton button1;
     private JButton button2;

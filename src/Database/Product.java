@@ -26,6 +26,10 @@ public class Product {
         this.lastUpdated = lastUpdated;
     }
 
+    public Product(int id, String modelName, double price, Size size, Manufacturer manufacturer, Color color) {
+    }
+    //TODO NY Konstruktor, borde ej påverka.
+
     public int getProductID() {
         return productID;
     }

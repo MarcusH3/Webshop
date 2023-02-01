@@ -2,6 +2,7 @@ package DataBaseConnections;
 
 import Database.*;
 
+import javax.xml.transform.Result;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,6 +65,29 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         }
         return products;
     }
+
+    public static boolean isLoginValid(String customerEMail, String customerPassword){
+        try (Connection con = createConnection();
+             PreparedStatement stmt = con.prepareStatement(
+                     "SELECT * FROM myseconddatabase.customers" +
+                             " WHERE customers.customerEMail =? AND customerPassword =?")){
+
+            stmt.setString((1), customerEMail);
+            stmt.setString(2,customerPassword);
+
+            ResultSet rs = stmt.executeQuery();
+            // TODO: 2023-02-01  If login is valid, return true and present new GUI screeen.
+            if(rs.next()){
+                return true;
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }  // TODO: 2023-02-01  If login not valid, return false and present error message or direct to create new user.
+
 
     public static List<String> getCategoryByGender(String username, String password, String gender){
 
@@ -129,12 +153,43 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         return genderList;
     }
 
-    public static List<String> getProduct(String username, String password){
-
-        ArrayList<String> products = new ArrayList<>();
+    public static List<Product> getProduct(){
+        List<Product>products = new ArrayList<>();
         try {
             properties = new Properties();
             InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try (Connection con = createConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM myseconddatabase.product " +
+                    " JOIN myseconddatabase.color ON product.colorID = color.colorID " +
+                    " JOIN myseconddatabase.manufacturer ON product.manufacturerID " +
+                    " JOIN myseconddatabase.size ON product.sizeID = size.sizeID; ")){
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String modelName = rs.getString("modelName");
+                double price = rs.getDouble("Price");
+                Size size = new Size(rs.getInt("sizeID"), rs.getInt("euSize"), rs.getInt("ukSize"), rs.getInt("usSize"));
+                Manufacturer manufacturer = new Manufacturer(rs.getInt("manufacturerID"), rs.getString("manufacturerName"));
+                Color color = new Color(rs.getInt("colorID"), rs.getString("color"));
+                products.add(new Product(id, modelName, price, size, manufacturer, color));
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+        return products;
+    }
+
+       /* ArrayList<String> products = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("Res/config.properties");
             properties.load(input);
         }
         catch (IOException e){
@@ -156,7 +211,7 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
             e.printStackTrace();
         }
         return products;
-    }
+    }*/
     public static List<String> getSizeByProduct(String username, String password, String productName){
 
         List<String> size = new ArrayList<>();
@@ -225,7 +280,7 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         ArrayList<Customer> customers = new ArrayList<>();
         try {
             properties = new Properties();
-            InputStream input = new FileInputStream("res/config.properties");
+            InputStream input = new FileInputStream("Res/config.properties");
             properties.load(input);
         }
         catch (IOException e){
@@ -261,7 +316,7 @@ public static void connectAndQueryDB(String username, String password){
 
         try {
             properties = new Properties();
-            InputStream input = new FileInputStream("res/config.properties");
+            InputStream input = new FileInputStream("Res/config.properties");
             properties.load(input);
         }
         catch (IOException e){
@@ -285,13 +340,49 @@ public static void connectAndQueryDB(String username, String password){
             e.printStackTrace();
         }
 }
+    /*    public class DatabaseManager {
+        private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+        private final String DB_URL = "jdbc:mysql://hostname:port/database";
+        private final String USER = "username";
+        private final String PASS = "password";
 
+        public boolean authenticate(String username, String password) {
+            boolean isAuthenticated = false;
+
+            try {
+                Class.forName(JDBC_DRIVER);
+
+                // Open a connection
+                Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+                // Execute SQL query
+                String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setString(1, username);
+                statement.setString(2, password);
+                ResultSet result = statement.executeQuery();
+
+                if (result.next()) {
+                    isAuthenticated = true;
+                }
+                result.close();
+                statement.close();
+                conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return isAuthenticated;
+        }
+    }*/
     public static ArrayList<String> getTopFive(String username, String password){
 
         ArrayList<String> topFive = new ArrayList<>();
         try {
             properties = new Properties();
-            InputStream input = new FileInputStream("res/config.properties");
+            InputStream input = new FileInputStream("Res/config.properties");
             properties.load(input);
         }
         catch (IOException e){
@@ -418,6 +509,7 @@ public static void connectAndQueryDB(String username, String password){
             e.printStackTrace();
         }
     }
+
        /* Data Access Object (DAO): A DAO is a class that abstracts the details of how the data is stored in the database,
         and provides a set of methods that the rest of the program can use to perform CRUD (Create, Read, Update, Delete)
         operations on the data.

@@ -2,6 +2,7 @@ package DataBaseConnections;
 
 import Database.City;
 import Database.Customer;
+import Database.Product;
 import Gui.Gui;
 
 import java.util.ArrayList;
@@ -47,11 +48,11 @@ public class Main {
         products = DataBaseConnection.getSizeByProduct("root", "marcusedlund", productName);
         return products;
     }
-    public List<String> getProduct(){
+    /*public List<String> getProduct(){
         List<String> products = new ArrayList<>();
         products = DataBaseConnection.getProduct("root", "marcusedlund");
         return products;
-    }
+    }*/
     public ArrayList<String> getTopFive(){
         ArrayList<String> topFive = new ArrayList<>();
        topFive = DataBaseConnection.getTopFive("root", "marcusedlund");
@@ -62,8 +63,15 @@ public class Main {
         customers = DataBaseConnection.getCustomer("root", "marcusedlund");
         return customers;
     }
+    public ArrayList<Product> getProduct() {
+        ArrayList<Product> products;
+        products = (ArrayList<Product>) DataBaseConnection.getProduct();
+        return products;
+    }
+
+
     public static void main(String[] args) {
        Gui.getInstance();
     }
-
 }
+
