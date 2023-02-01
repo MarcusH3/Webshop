@@ -34,7 +34,7 @@ public class SignUpPanel extends JPanel {
     private boolean isTextFieldReady = false;
     private boolean isPasswordFieldReady = false;
 
-    public SignUpPanel(Buttons buttons){
+    public SignUpPanel(Buttons buttons) {
         this.buttons = buttons;
         customer = new Customer();
 
@@ -54,19 +54,19 @@ public class SignUpPanel extends JPanel {
 
         //TOP PANEL ATTRIBUTES
         JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(500,84));
+        topPanel.setPreferredSize(new Dimension(500, 84));
 
         //CENTER PANEL ATTRIBUTES
         JPanel centerPanel = new JPanel(new BorderLayout());
         JPanel leftBorder = new JPanel();
-        leftBorder.setPreferredSize(new Dimension(100,421));
+        leftBorder.setPreferredSize(new Dimension(100, 421));
         leftBorder.setBackground(Color.white);
         JPanel rightBorder = new JPanel();
         rightBorder.setBackground(Color.white);
-        rightBorder.setPreferredSize(new Dimension(100,421));
+        rightBorder.setPreferredSize(new Dimension(100, 421));
         JPanel centerBorder = new JPanel();
-        centerBorder.setLayout(new BoxLayout(centerBorder,BoxLayout.Y_AXIS));
-        centerBorder.setPreferredSize(new Dimension(300,421));
+        centerBorder.setLayout(new BoxLayout(centerBorder, BoxLayout.Y_AXIS));
+        centerBorder.setPreferredSize(new Dimension(300, 421));
 
         //CENTER PANEL ELEMENTS
         firstNameTf = new JTextField(20);
@@ -84,40 +84,39 @@ public class SignUpPanel extends JPanel {
         textFields.add(addressTf);
         textFields.add(cityTf);
 
-        for(JTextField textField : textFields){
-            if(textField == firstNameTf){
+        for (JTextField textField : textFields) {
+            if (textField == firstNameTf) {
                 firstNameTf.setText(firstName);
             }
-            if(textField == lastNameTf){
+            if (textField == lastNameTf) {
                 lastNameTf.setText(lastName);
 
             }
-            if(textField == emailTf){
+            if (textField == emailTf) {
                 emailTf.setText(eMail);
 
             }
-            if(textField == phoneNumberTf){
+            if (textField == phoneNumberTf) {
                 phoneNumberTf.setText(phoneNumber);
 
             }
-            if(textField == addressTf){
+            if (textField == addressTf) {
                 addressTf.setText(address);
 
             }
-            if(textField == cityTf){
+            if (textField == cityTf) {
                 cityTf.setText(city);
 
             }
             textField.setForeground(Color.lightGray);
             textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
-            textField.setMinimumSize(new Dimension(300,71));
+            textField.setMinimumSize(new Dimension(300, 71));
         }
-
 
 
         textFields.forEach(textField -> new JTextFieldManipulator(textField));
 
-        textFields.forEach(textField -> textField.addActionListener(e->{
+        textFields.forEach(textField -> textField.addActionListener(e -> {
             System.out.println(textField.getText());
         }));
 
@@ -128,11 +127,11 @@ public class SignUpPanel extends JPanel {
         passwordFields.add(passwordField1);
         passwordFields.add(passwordField2);
 
-        for(JPasswordField passwordField : passwordFields){
-            if(passwordField == passwordField1){
+        for (JPasswordField passwordField : passwordFields) {
+            if (passwordField == passwordField1) {
                 passwordField1.setText("Password");
             }
-            if(passwordField == passwordField2){
+            if (passwordField == passwordField2) {
                 passwordField2.setText("Re-enter Password");
 
             }
@@ -141,7 +140,7 @@ public class SignUpPanel extends JPanel {
         }
 
         passwordFields.forEach(passwordField -> new JTextFieldManipulator(passwordField));
-        passwordFields.forEach(passwordField -> passwordField.addActionListener(e->{
+        passwordFields.forEach(passwordField -> passwordField.addActionListener(e -> {
             System.out.println(passwordField.getText());
         }));
 
@@ -154,32 +153,32 @@ public class SignUpPanel extends JPanel {
         bpLefPanel.setBackground(Color.white);
 
         JPanel bpCenterPanel = new JPanel();
-        bpCenterPanel.setLayout(new BoxLayout(bpCenterPanel,BoxLayout.Y_AXIS));
+        bpCenterPanel.setLayout(new BoxLayout(bpCenterPanel, BoxLayout.Y_AXIS));
         bpCenterPanel.setPreferredSize(new Dimension(300, 253));
         bpCenterPanel.setBackground(Color.white);
 
         JPanel bpCpTopPanel = new JPanel();
-        bpCpTopPanel.setPreferredSize(new Dimension(300,84));
+        bpCpTopPanel.setPreferredSize(new Dimension(300, 84));
         bpCpTopPanel.setBackground(Color.WHITE);
 
         JPanel bpCpCenterPanel = new JPanel();
         bpCpCenterPanel.setLayout(new BorderLayout());
-        bpCpCenterPanel.setPreferredSize(new Dimension(300,84));
+        bpCpCenterPanel.setPreferredSize(new Dimension(300, 84));
         bpCpCenterPanel.setBackground(Color.WHITE);
 
         JButton nextButton = buttons.getNextButton();
-        nextButton.setPreferredSize(new Dimension(100,84));
+        nextButton.setPreferredSize(new Dimension(100, 84));
         nextButton.setBackground(Color.WHITE);
 
         JButton previousButton = buttons.getPreviousButton();
-        previousButton.setPreferredSize(new Dimension(100,84));
+        previousButton.setPreferredSize(new Dimension(100, 84));
         previousButton.setBackground(Color.WHITE);
 
         bpCpCenterPanel.add(nextButton, BorderLayout.WEST);
-        bpCpCenterPanel.add(previousButton,BorderLayout.EAST);
+        bpCpCenterPanel.add(previousButton, BorderLayout.EAST);
 
         JPanel bpCpBottomPanel = new JPanel();
-        bpCpBottomPanel.setPreferredSize(new Dimension(300,84));
+        bpCpBottomPanel.setPreferredSize(new Dimension(300, 84));
         bpCpBottomPanel.setBackground(Color.WHITE);
         bpCpBottomPanel.setLayout(new BorderLayout());
 
@@ -199,15 +198,15 @@ public class SignUpPanel extends JPanel {
         topPanel.setBackground(Color.white);
 
         JPanel cbTopBorder = new JPanel();
-        cbTopBorder.setPreferredSize(new Dimension(300,84));
+        cbTopBorder.setPreferredSize(new Dimension(300, 84));
         cbTopBorder.setBackground(Color.WHITE);
 
         JPanel cbBottomBorder = new JPanel();
-        cbBottomBorder.setPreferredSize(new Dimension(300,84));
+        cbBottomBorder.setPreferredSize(new Dimension(300, 84));
         cbBottomBorder.setBackground(Color.WHITE);
 
         JPanel cbCenterBorder = new JPanel();
-        cbCenterBorder.setPreferredSize(new Dimension(300,84));
+        cbCenterBorder.setPreferredSize(new Dimension(300, 84));
         cbCenterBorder.setBackground(Color.WHITE);
         cbCenterBorder.setLayout(new BoxLayout(cbCenterBorder, BoxLayout.Y_AXIS));
 
@@ -225,14 +224,14 @@ public class SignUpPanel extends JPanel {
         centerBorder.add(cbCenterBorder);
         centerBorder.add(cbBottomBorder);
 
-        centerPanel.add(leftBorder,BorderLayout.WEST);
-        centerPanel.add(centerBorder,BorderLayout.CENTER);
+        centerPanel.add(leftBorder, BorderLayout.WEST);
+        centerPanel.add(centerBorder, BorderLayout.CENTER);
         centerPanel.add(rightBorder, BorderLayout.EAST);
 
         bottomPanel.setBackground(Color.white);
 
-        centerPanel.setPreferredSize(new Dimension(500,431));
-        bottomPanel.setPreferredSize(new Dimension(500,253));
+        centerPanel.setPreferredSize(new Dimension(500, 431));
+        bottomPanel.setPreferredSize(new Dimension(500, 253));
 
         bottomPanel.add(bpLefPanel, BorderLayout.WEST);
         bottomPanel.add(bpCenterPanel, BorderLayout.CENTER);
@@ -242,36 +241,37 @@ public class SignUpPanel extends JPanel {
         backgroundPanel.add(centerPanel);
         backgroundPanel.add(bottomPanel);
 
-        nextButton.addActionListener(e->{
-            for(JTextField textField : textFields){
-                if(textField.getText() == null || Objects.equals(textField.getText(), firstName) ||
+        nextButton.addActionListener(e -> {
+            int counter = 0;
+            for (JTextField textField : textFields) {
+                if (textField.getText() == null && Objects.equals(textField.getText(), firstName) ||
                         Objects.equals(textField.getText(), lastName) || Objects.equals(textField.getText(), eMail) ||
                         Objects.equals(textField.getText(), phoneNumber) || Objects.equals(textField.getText(), address) ||
-                        Objects.equals(textField.getText(), city)){
-                        textField.setForeground(Color.RED);
+                        Objects.equals(textField.getText(), city)) {
+                    textField.setForeground(Color.RED);
+                    counter--;
                 }
-                else{
+                if(counter == textFields.size()){
                     setNewCustomer(textField);
                     isTextFieldReady = true;
                 }
-
+                counter++;
             }
-            for(JPasswordField passwordField : passwordFields){
-                if(passwordField.getText() == null || passwordField.getText().isEmpty()){
+            for (JPasswordField passwordField : passwordFields) {
+                if (passwordField.getText() == null || passwordField.getText().isEmpty()) {
                     passwordField.setForeground(Color.RED);
                 }
             }
-            if(!passwordField1.getText().equals(passwordField2.getText())||
-                    passwordField1.getText() == null || passwordField1.getText().isEmpty()||
-                    passwordField2.getText() == null || passwordField2.getText().isEmpty()){
+            if (!passwordField1.getText().equals(passwordField2.getText()) ||
+                    passwordField1.getText() == null || passwordField1.getText().isEmpty() ||
+                    passwordField2.getText() == null || passwordField2.getText().isEmpty()) {
                 passwordField1.setForeground(Color.RED);
                 passwordField2.setForeground(Color.RED);
-            }
-            else if (passwordField1.getText().equals(passwordField2.getText())) {
+            } else if (passwordField1.getText().equals(passwordField2.getText())) {
                 setNewCustomerPassword(passwordField1);
                 isPasswordFieldReady = true;
             }
-            if(isTextFieldReady && isPasswordFieldReady){
+            if (isTextFieldReady && isPasswordFieldReady) {
                 customer.getCityID();
                 buttons.getGui().getMain().insertNewCustomer(customer);
                 buttons.setState(State.INTRO);
@@ -282,23 +282,33 @@ public class SignUpPanel extends JPanel {
         add(backgroundPanel);
 
     }
-    public void setNewCustomer(JTextField textField){
-        if(textField.equals(firstNameTf)){
+
+    public void setNewCustomer(JTextField textField) {
+        if (textField.equals(firstNameTf)) {
             customer.setCustomerFirstName(textField.getText());
         }
-        if(textField.equals(lastNameTf)){
+        if (textField.equals(lastNameTf)) {
             customer.setCustomerLastName(textField.getText());
         }
-        if(textField.equals(emailTf)){
-            customer.setCustomerEMail(textField.getText());
+        if (textField.equals(emailTf)) {
+            String targetEmail = emailTf.getText();
+            List<Customer> customerList = buttons.getGui().getMain().getCustomer();
+            boolean emailMatchFound = emailMatch(targetEmail, customerList);
+            if (emailMatchFound) {
+                System.out.println("Match found: " + targetEmail);
+                return;
+
+            } else {
+                customer.setCustomerEMail(textField.getText());
+            }
         }
-        if(textField.equals(phoneNumberTf)){
+        if (textField.equals(phoneNumberTf)) {
             customer.setCustomerPhoneNumber(textField.getText());
         }
-        if(textField.equals(addressTf)){
+        if (textField.equals(addressTf)) {
             customer.setCustomerAddress(textField.getText());
         }
-        if(textField.equals(cityTf)) {
+        if (textField.equals(cityTf)) {
             String targetCityName = cityTf.getText();
             List<City> cities = buttons.getGui().getMain().getCity();
 
@@ -325,16 +335,27 @@ public class SignUpPanel extends JPanel {
             }
         }
     }
-    public void setNewCustomerPassword(JPasswordField passwordField){
+
+    public void setNewCustomerPassword(JPasswordField passwordField) {
         customer.setPassword(passwordField.getText());
     }
-    public boolean cityNameMatch(String targetCityName, List<City> cities){
+
+    public boolean cityNameMatch(String targetCityName, List<City> cities) {
         cities = buttons.getGui().getMain().getCity();
 
-        if(cities.stream().anyMatch(city -> city.getCityName().equalsIgnoreCase(targetCityName))){
+        if (cities.stream().anyMatch(city -> city.getCityName().equalsIgnoreCase(targetCityName))) {
             return true;
+        } else {
+            return false;
         }
-        else{
+    }
+
+    public boolean emailMatch(String targetCityName, List<Customer> customers) {
+        customers = buttons.getGui().getMain().getCustomer();
+
+        if (customers.stream().anyMatch(city -> customer.getEmail().equalsIgnoreCase(targetCityName))) {
+            return true;
+        } else {
             return false;
         }
     }
