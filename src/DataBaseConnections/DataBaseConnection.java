@@ -27,45 +27,6 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         return con;
     }
 
-    public static List<String> getModelByCategory(String username, String password, String gender, String category){
-
-        List<String> products = new ArrayList<>();
-        try {
-            properties = new Properties();
-            InputStream input = new FileInputStream("res/config.properties");
-            properties.load(input);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        try(Connection con = DriverManager.getConnection(
-                properties.getProperty("urlString"), username,password)){
-            Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT product.modelName\n" +
-                    "FROM subcategory\n" +
-                    "JOIN \n" +
-                    "category \n" +
-                    "on category.subcategoryID = subcategory.subCategoryID\n" +
-                    "join gendercategory\n" +
-                    "on category.genderCategoryID = gendercategory.genderCategoryID\n" +
-                    "join product\n" +
-                    "on product.categoryID = category.categoryID\n" +
-                    "and product.categoryID = category.categoryID\n" +
-                    "where gendercategory.genderCategoryName = '" + gender + "' and subcategory.subCategoryName = '" + category +"'");
-
-            while(resultSet.next()){
-                String model = resultSet.getString("product.modelName");
-                products.add(model);
-            }
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return products;
-    }
-
     public static boolean isLoginValid(String customerEMail, String customerPassword){
         try (Connection con = createConnection();
              PreparedStatement stmt = con.prepareStatement(
@@ -88,10 +49,9 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         return false;
     }  // TODO: 2023-02-01  If login not valid, return false and present error message or direct to create new user.
 
+    public static List<GenderCategory> getGender(String username, String password){
 
-    public static List<String> getCategoryByGender(String username, String password, String gender){
-
-        List<String> categories = new ArrayList<>();
+        List<GenderCategory> genderList = new ArrayList<>();
         try {
             properties = new Properties();
             InputStream input = new FileInputStream("res/config.properties");
@@ -104,46 +64,16 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         try(Connection con = DriverManager.getConnection(
                 properties.getProperty("urlString"), username,password)){
             Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT subcategory.subcategoryName\n" +
-                    "FROM subcategory\n" +
-                    "JOIN \n" +
-                    "category \n" +
-                    "on category.subcategoryID = subcategory.subCategoryID\n" +
-                    "join gendercategory\n" +
-                    "on category.genderCategoryID = gendercategory.genderCategoryID\n" +
-                    "where genderCategoryName = '" + gender + "'");
+            ResultSet resultSet = statement.executeQuery("SELECT * from genderCategory");
 
             while(resultSet.next()){
-                String category = resultSet.getString("subcategory.subcategoryName");
-                categories.add(category);
-            }
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return categories;
-    }
-    public static List<String> getGender(String username, String password){
-
-        List<String> genderList = new ArrayList<>();
-        try {
-            properties = new Properties();
-            InputStream input = new FileInputStream("res/config.properties");
-            properties.load(input);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        try(Connection con = DriverManager.getConnection(
-                properties.getProperty("urlString"), username,password)){
-            Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT genderCategory.genderCategoryName from genderCategory");
-
-            while(resultSet.next()){
+                int genderID = resultSet.getInt("genderCategory.genderCategoryID");
                 String gender = resultSet.getString("genderCategory.genderCategoryName");
-                genderList.add(gender);
+                GenderCategory genderCategory = new GenderCategory();
+                genderCategory.setGenderCategoryID(genderID);
+                genderCategory.setGenderCategoryName(gender);
+
+                genderList.add(genderCategory);
             }
 
         }
@@ -153,7 +83,146 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         return genderList;
     }
 
-    public static List<Product> getProduct(){
+    public static List<SubCategory> getSubCategory(String username, String password){
+
+        List<SubCategory> subCategories = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from subCategory");
+
+            while(resultSet.next()){
+                int subCategoryID = resultSet.getInt("subCategory.subCategoryID");
+                String subCategoryName = resultSet.getString("subCategory.subCategoryName");
+                SubCategory subCategory = new SubCategory();
+                subCategory.setSubCategoryID(subCategoryID);
+                subCategory.setSubCategoryName(subCategoryName);
+
+                subCategories.add(subCategory);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return subCategories;
+    }
+
+    public static List<Color> getColor(String username, String password){
+
+        List<Color> colors = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Color");
+
+            while(resultSet.next()){
+                int colorID = resultSet.getInt("Color.ColorID");
+                String colorName = resultSet.getString("Color.ColorName");
+                Color color = new Color();
+                color.setColorID(colorID);
+                color.setColorName(colorName);
+
+                colors.add(color);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return colors;
+    }
+
+    public static List<Size> getSize(String username, String password){
+
+        List<Size> sizes = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Size");
+
+            while(resultSet.next()){
+                int sizeID = resultSet.getInt("size.sizeID");
+                int euSize = resultSet.getInt("size.euSize");
+                int ukSize = resultSet.getInt("size.ukSize");
+                int usSize = resultSet.getInt("size.usSize");
+
+                Size size = new Size(sizeID,euSize,ukSize,usSize);
+
+
+                sizes.add(size);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return sizes;
+    }
+
+    public static List<Inventory> getInventory(String username, String password){
+
+        List<Inventory> inventories = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from inventory");
+
+            while(resultSet.next()){
+                int inventoryID = resultSet.getInt("inventory.inventoryID");
+                int productID = resultSet.getInt("inventory.productID");
+                int inStock = resultSet.getInt("inventory.inStock");
+
+                Inventory inventory = new Inventory(inventoryID,productID,inStock);
+
+
+                inventories.add(inventory);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return inventories;
+    }
+
+    public static List<Product> getProduct(String username, String password){
         List<Product>products = new ArrayList<>();
         try {
             properties = new Properties();
@@ -164,22 +233,35 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
             e.printStackTrace();
         }
 
-        try (Connection con = createConnection();
+        try (Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM myseconddatabase.product " +
                     " JOIN myseconddatabase.color ON product.colorID = color.colorID " +
                     " JOIN myseconddatabase.manufacturer ON product.manufacturerID " +
-                    " JOIN myseconddatabase.size ON product.sizeID = size.sizeID; ")){
+                    " JOIN myseconddatabase.size ON product.sizeID = size.sizeID; ");{
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String modelName = rs.getString("modelName");
+                Product product = new Product();
+                int id = rs.getInt("product.productID");
+                String modelName = rs.getString("product.modelName");
                 double price = rs.getDouble("Price");
                 Size size = new Size(rs.getInt("sizeID"), rs.getInt("euSize"), rs.getInt("ukSize"), rs.getInt("usSize"));
                 Manufacturer manufacturer = new Manufacturer(rs.getInt("manufacturerID"), rs.getString("manufacturerName"));
-                Color color = new Color(rs.getInt("colorID"), rs.getString("color"));
-                products.add(new Product(id, modelName, price, size, manufacturer, color));
+                Color color = new Color(rs.getInt("colorID"), rs.getString("colorName"));
+                int categoryID = rs.getInt("product.categoryID");
+
+                product.setProductID(id);
+                product.setModelName(modelName);
+                product.setPrice(price);
+                product.setSizeID(size.getSizeID());
+                product.setCategoryID(categoryID);
+                product.setManufacturerID(manufacturer.getManufacturerID());
+                product.setColorID(color.getColorID());
+                products.add(product);
             }
-        } catch (SQLException throwable) {
+        }
+        }
+        catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
@@ -453,6 +535,43 @@ public static void connectAndQueryDB(String username, String password){
             e.printStackTrace();
         }
         return cityList;
+    }
+
+    public static List<Category> getCategory(String username, String password){
+
+
+        List<Category> categories = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from Category");
+
+            while(resultSet.next()){
+                int categoryID = resultSet.getInt("category.categoryID");
+                int subCategoryID = resultSet.getInt("category.subCategoryID");
+                int genderCategoryID = resultSet.getInt("category.genderCategoryID");
+
+                Category category = new Category();
+                category.setCategoryID(categoryID);
+                category.setSubCategoryID(subCategoryID);
+                category.setGenderCategoryID(genderCategoryID);
+                categories.add(category);
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return categories;
     }
 
     public static void insertCustomer(String username, String password, Customer customer){

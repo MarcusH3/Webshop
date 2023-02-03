@@ -11,6 +11,7 @@ public class Customer {
         private String customerPhoneNumber;
         private String password;
         private int cityID;
+        private Customer customer;
 
         public Customer(){
 
@@ -105,5 +106,11 @@ public class Customer {
 
     public void setCityID(int cityID) {
         this.cityID = cityID;
+    }
+    public Customer getCustomer(){
+        return customer;
+    }
+    public void setCustomer(Customer customer){
+        this.customer = customer;
     }
 }

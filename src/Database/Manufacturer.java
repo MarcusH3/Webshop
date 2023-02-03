@@ -19,4 +19,16 @@ public class Manufacturer {
                 ", brandName='" + manufacturerName + '\'' +
                 '}';
     }
+
+    public int getManufacturerID() {
+        return manufacturerID;
+    }
+
+    public void setManufacturerID(int manufacturerID) {
+        this.manufacturerID = manufacturerID;
+    }
+
+    public void setManufacturerName(String manufacturerName) {
+        this.manufacturerName = manufacturerName;
+    }
 }

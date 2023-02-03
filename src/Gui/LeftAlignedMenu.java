@@ -1,6 +1,7 @@
 package Gui;
 
 import Database.Product;
+import Database.Customer;
 import Utilities.JTextFieldManipulator;
 
 import javax.swing.*;
@@ -22,7 +23,11 @@ private ArrayList<Product> stringList;
     private JButton button7;
     private JButton button8;
     private JButton button9;
+    private Customer customer;
     public LeftAlignedMenu(Buttons buttons){
+
+        customer = new Customer();
+        customer = customer.getCustomer();
 
         setBackground(Color.white);
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));

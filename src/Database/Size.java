@@ -31,5 +31,33 @@ public class Size {
                 ", uk=" + ukSize + ", us=" + usSize +
                 '}';
     }
+
+    public int getSizeID() {
+        return sizeID;
+    }
+
+    public void setSizeID(int sizeID) {
+        this.sizeID = sizeID;
+    }
+
+    public void setEuSize(double euSize) {
+        this.euSize = euSize;
+    }
+
+    public double getUkSize() {
+        return ukSize;
+    }
+
+    public void setUkSize(double ukSize) {
+        this.ukSize = ukSize;
+    }
+
+    public double getUsSize() {
+        return usSize;
+    }
+
+    public void setUsSize(double usSize) {
+        this.usSize = usSize;
+    }
 }
 

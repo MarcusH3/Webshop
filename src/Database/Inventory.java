@@ -10,12 +10,10 @@ public class Inventory {
 
     public Inventory() { }
 
-    public Inventory(int inventoryID, int productID, int inStock, Timestamp created, Timestamp lastUpdated) {
+    public Inventory(int inventoryID, int productID, int inStock) {
         this.inventoryID = inventoryID;
         this.productID = productID;
         this.inStock = inStock;
-        this.created = created;
-        this.lastUpdated = lastUpdated;
     }
 
     public int getInventoryID() {

@@ -1,14 +1,17 @@
 package DataBaseConnections;
 
-import Database.City;
-import Database.Customer;
-import Database.Product;
+import Database.*;
 import Gui.Gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    public List<Category> getCategories(){
+        List<Category> categories;
+        categories = DataBaseConnection.getCategory("root","marcusedlund");
+        return categories;
+    }
 
     public void insertNewCity(City city){
         DataBaseConnection.insertCity("root","marcusedlund", city);
@@ -32,10 +35,31 @@ public class Main {
         categories = DataBaseConnection.getCategoryByGender("root", "marcusedlund", gender);
         return categories;
     }
-    public List<String> getGender(){
-        List<String> genders = new ArrayList<>();
+    public List<GenderCategory> getGender(){
+        List<GenderCategory> genders;
         genders = DataBaseConnection.getGender("root", "marcusedlund");
         return genders;
+    }
+    public List<SubCategory> getSubCategory(){
+        List<SubCategory> subCategories;
+        subCategories = DataBaseConnection.getSubCategory("root", "marcusedlund");
+        return subCategories;
+    }
+
+    public List<Color> getColor(){
+        List<Color> colors;
+        colors = DataBaseConnection.getColor("root", "marcusedlund");
+        return colors;
+    }
+    public List<Size> getSize(){
+        List<Size> sizes;
+        sizes = DataBaseConnection.getSize("root", "marcusedlund");
+        return sizes;
+    }
+    public List<Inventory> getInventory(){
+        List<Inventory> inventories;
+        inventories = DataBaseConnection.getInventory("root", "marcusedlund");
+        return inventories;
     }
 
     public List<String> getColorByProduct(String productName){
@@ -65,7 +89,7 @@ public class Main {
     }
     public ArrayList<Product> getProduct() {
         ArrayList<Product> products;
-        products = (ArrayList<Product>) DataBaseConnection.getProduct();
+        products = (ArrayList<Product>) DataBaseConnection.getProduct("root","marcusedlund");
         return products;
     }
 
