@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TopFive extends JPanel {
@@ -34,16 +35,26 @@ public class TopFive extends JPanel {
         List<Integer> inventoryIDTemp;
         List<Integer> quantity;
 
-        inventoryIDTemp = orderDetails.stream().filter(o->o.getQuantity() > 0).map(OrderDetail::getInventoryID).collect(Collectors.toList());
+        inventoryIDTemp = orderDetails.stream().filter(o->o.getQuantity()>0).map(OrderDetail::getQuantity).collect(Collectors.toList());
 
         quantity = orderDetails.stream().filter(o-> inventoryIDTemp.stream().
                 anyMatch(i -> i.intValue() == o.getInventoryID())).map(OrderDetail::getQuantity).collect(Collectors.toList());
+
+/*
+
+
 
         modelName = products.stream()
                 .filter(p-> inventoryIDTemp.stream().anyMatch(i -> i.intValue() == p.getProductID()))
                 .map(Product::getModelName).distinct()
                 .collect(Collectors.toList());
 
+
+        modelName =  products.stream().filter(p-> inventories.stream().anyMatch(i->i.getProductID() == p.getProductID()
+        && orderDetails.stream().anyMatch(o->o.getInventoryID() == i.getInventoryID()
+                && coordinationTables.stream().anyMatch(c->c.getCoordinationTableID() == o.getCoordinationTableID()
+        && orders.stream().anyMatch(orders->orders.getCoordinationTableID() == c.getCoordinationTableID())))))
+                .map(Product::getModelName).distinct().collect(Collectors.toList());*/
 
 
 
