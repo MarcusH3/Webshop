@@ -20,6 +20,7 @@ public class Gui implements ActionListener {
     private JPanel leftAlignedMenu;
     private JPanel topFiveMenu;
     private JPanel productPanel;
+    private JPanel cart;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -123,8 +124,12 @@ public class Gui implements ActionListener {
                 categoryPanel.setVisible(true);
                 backPanel.add(categoryPanel);
             }
-            case SNEAKER, SANDAL, SLIPPER -> {
-
+           case CART -> {
+               cart = new Cart(buttons);
+               introPanel.add(leftAlignedMenu);
+               introPanel.add(cart);
+               introPanel.setVisible(true);
+               backPanel.add(introPanel);
             }
         }
         for(Component component : introPanel.getComponents()){

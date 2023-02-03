@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Buttons extends AbstractGui implements ActionListener, MouseListener {
     private JButton button1;
@@ -22,21 +23,27 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private JButton introButton4;
     private JButton introButton5;
     private JButton introButton6;
-    private JButton introButton7;
-    private JButton introButton8;
-    private JButton introButton9;
-    private JButton loginButton;
-    private JButton exitButton;
+    private final JButton introButton7;
+    private final JButton introButton8;
+    private final JButton introButton9;
+    private final JButton loginButton;
+    private final JButton exitButton;
     private JButton tempButton;
-    private JButton signUpButton;
-    private JButton nextButton;
-    private JButton previousButton;
+    private final JButton signUpButton;
+    private final JButton nextButton;
+    private final JButton previousButton;
+    private final JButton addToCartButton;
+    private final JButton checkOutButton;
+    private final JButton proceedButton;
+    private final JButton discardButton;
     private JTextField searchBar;
     private Gui gui;
-    private Dimension introButtonDimension;
-    private GridBagConstraints gbc;
+    private final Dimension introButtonDimension;
+    private final GridBagConstraints gbc;
     private State state = State.WELCOME;
     private ArrayList<String> stringList;
+
+    private List<Integer> productID;
 
     private State previousState;
 
@@ -44,6 +51,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         introButtonDimension = new Dimension(200,60);
         this.gui = gui;
+
+        productID = new ArrayList<>();
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -256,6 +265,22 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         previousButton = new JButton("RETURN");
         previousButton.addActionListener(this);
+
+        addToCartButton = new JButton("ADD 2 CART");
+        addToCartButton.setBackground(Color.white);
+        addToCartButton.addActionListener(this);
+
+        checkOutButton = new JButton("CHECK OUT");
+        checkOutButton.setBackground(Color.white);
+        checkOutButton.addActionListener(this);
+
+        proceedButton = new JButton("YES");
+        proceedButton.setBackground(Color.white);
+        proceedButton.addActionListener(this);
+
+        discardButton = new JButton("NO");
+        discardButton.setBackground(Color.white);
+        discardButton.addActionListener(this);
     }
 
     public static ImageIcon getImageIcon(String path){
@@ -528,5 +553,29 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public JTextField getSearchBar() {
         return searchBar;
+    }
+
+    public JButton getAddToCartButton() {
+        return addToCartButton;
+    }
+
+    public List<Integer> getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID.add(productID);
+    }
+
+    public JButton getCheckOutButton() {
+        return checkOutButton;
+    }
+
+    public JButton getProceedButton() {
+        return proceedButton;
+    }
+
+    public JButton getDiscardButton() {
+        return discardButton;
     }
 }

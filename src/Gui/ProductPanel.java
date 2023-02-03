@@ -2,6 +2,8 @@ package Gui;
 
 import Database.*;
 import Utilities.PromptText;
+import Utilities.State;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,15 +24,20 @@ public class ProductPanel extends JPanel{
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JComboBox comboBox3;
+    private JComboBox comboBox4;
     private Buttons buttons;
     private boolean removing = false;
-    private List<GenderCategory> genderCategories;
-    private List<SubCategory> subCategories;
-    private List<Category> categories;
-    private List<Product> products;
-    private List<String> genderStringList;
-    private List<Database.Color> colors;
-    private List<Size> sizes;
+    private final List<GenderCategory> genderCategories;
+    private final List<SubCategory> subCategories;
+    private final List<Category> categories;
+    private final List<Product> products;
+    private final List<String> genderStringList;
+    private final List<Database.Color> colors;
+    private final List<Size> sizes;
+    private final List<Inventory> inventories;
+    private final  JButton addToCart;
+    private final  JButton checkOutButton;
+    private int productID;
 
     public ProductPanel(Buttons buttons) {
         this.buttons = buttons;
@@ -48,21 +55,22 @@ public class ProductPanel extends JPanel{
         leftPanel.setMaximumSize(new Dimension(100,563));
         leftPanel.setBackground(Color.red);*/
 
-        JPanel rightPanel = new JPanel();
-        rightPanel.setPreferredSize(new Dimension(100,563));
-        rightPanel.setMaximumSize(new Dimension(100,563));
-        rightPanel.setBackground(Color.white);
+
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(700,100));
         bottomPanel.setMaximumSize(new Dimension(700,100));
         bottomPanel.setBackground(Color.white);
 
+        addToCart = buttons.getAddToCartButton();
+        checkOutButton = buttons.getCheckOutButton();
+        bottomPanel.add(addToCart);
+        bottomPanel.add(checkOutButton);
+
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(Color.white);
 
         add(topPanel,BorderLayout.NORTH);
-        add(rightPanel, BorderLayout.EAST);
         add(bottomPanel, BorderLayout.SOUTH);
         add(centerPanel, BorderLayout.WEST);
 
@@ -71,12 +79,14 @@ public class ProductPanel extends JPanel{
         comboBox1 = new JComboBox<String>();
         comboBox2 = new JComboBox<String>();
         comboBox3 = new JComboBox<String>();
+        comboBox4 = new JComboBox<String>();
 
         comboBox.setBackground(Color.white);
         comboBox0.setBackground(Color.white);
         comboBox1.setBackground(Color.white);
         comboBox2.setBackground(Color.white);
         comboBox3.setBackground(Color.white);
+        comboBox4.setBackground(Color.white);
 
         genderCategories = buttons.getGui().getMain().getGender();
         categories = buttons.getGui().getMain().getCategories();
@@ -84,6 +94,7 @@ public class ProductPanel extends JPanel{
         products = buttons.getGui().getMain().getProduct();
         colors = buttons.getGui().getMain().getColor();
         sizes = buttons.getGui().getMain().getSize();
+        inventories = buttons.getGui().getMain().getInventory();
 
 
         genderStringList = genderCategories.stream().map(genderCategory -> genderCategory.getGenderCategoryName()).collect(Collectors.toList());
@@ -99,6 +110,7 @@ public class ProductPanel extends JPanel{
                 comboBox1.setVisible(false);
                 comboBox2.setVisible(false);
                 comboBox3.setVisible(false);
+                comboBox4.setVisible(false);
             }
         });
         comboBox0.addActionListener(e->{
@@ -109,6 +121,7 @@ public class ProductPanel extends JPanel{
                 comboBox1.setVisible(true);
                 comboBox2.setVisible(false);
                 comboBox3.setVisible(false);
+                comboBox4.setVisible(false);
                 comboBox1.setSelectedItem("Select Product");
             }
         });
@@ -118,6 +131,7 @@ public class ProductPanel extends JPanel{
                 populateComboBox(comboBox2, "Select Color", ()-> getColor(comboBox1.getSelectedItem().toString()));
                 comboBox2.setVisible(true);
                 comboBox3.setVisible(false);
+                comboBox4.setVisible(false);
             }
         });
         comboBox2.addActionListener(e->{
@@ -125,43 +139,50 @@ public class ProductPanel extends JPanel{
             if(comboBox2.getSelectedItem() != "Select Color"){
                 populateComboBox(comboBox3, "Select Size", ()-> getSize(comboBox1.getSelectedItem().toString()));
                 comboBox3.setVisible(true);
+                comboBox4.setVisible(false);
             }
         });
 
-/*        comboBox3.addActionListener(e->{
+       comboBox3.addActionListener(e->{
             if(removing)return;
             if(comboBox3.getSelectedItem() != "Select Size"){
-                new JLabel()
-
+                comboBox4.addItem("In stock: " + getInStock(comboBox1.getSelectedItem().toString(), comboBox2.getSelectedItem().toString()
+                        ,Double.parseDouble(comboBox3.getSelectedItem().toString())));
+                comboBox4.setVisible(true);
             }
-        });*/
+        });
+
+       addToCart.addActionListener(e->{
+           if(comboBox4.isVisible()){
+                buttons.setProductID(getProductID());
+           }
+           else{
+               System.out.println("Specify Product");
+           }
+       });
+        checkOutButton.addActionListener(e->{
+            if(!buttons.getProductID().isEmpty()){
+                buttons.setState(State.CART);
+                buttons.getGui().updateGui();
+            }
+            else{
+                System.out.println("No products in cart");
+            }
+        });
 
         centerPanel.add(comboBox);
         centerPanel.add(comboBox0);
         centerPanel.add(comboBox1);
         centerPanel.add(comboBox2);
         centerPanel.add(comboBox3);
+        centerPanel.add(comboBox4);
 
         comboBox0.setVisible(false);
         comboBox1.setVisible(false);
         comboBox2.setVisible(false);
         comboBox3.setVisible(false);
+        comboBox4.setVisible(false);
 
-    }
-
-    public boolean isNotPromptText(JComboBox<String> comboBox, String promptText){
-
-        if(comboBox.getSelectedItem() == null){
-            return false;
-        }
-        if (!comboBox.getSelectedItem().equals(promptText)) {
-            return true;
-        }
-        return false;
-    }
-
-    public void removeStringFromComboBox(JComboBox<String> comboBox) {
-        comboBox.removeAllItems();
     }
 
     public JComboBox<String> populateComboBox(JComboBox<String> comboBox, String promptText, Supplier<List<String>> entitySupplier) {
@@ -191,7 +212,7 @@ public class ProductPanel extends JPanel{
 
     public List<String> getProductName(String subCategoryName) {
 
-    int categoryID = subCategories.stream()
+    Integer categoryID = subCategories.stream()
             .filter(sc -> sc.getSubCategoryName().equals(subCategoryName))
             .map(sc -> categories.stream().filter(c -> c.getSubCategoryID() == sc.getSubCategoryID()).findFirst().orElse(null))
             .map(Category::getCategoryID)
@@ -222,5 +243,34 @@ public class ProductPanel extends JPanel{
                 .map(Size::getEuSize)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
+    }
+    public int getInStock(String modelName, String color, double size){
+        Integer colorID = colors.stream()
+                .filter(c -> c.getColorName().equals(color))
+                .map(Database.Color::getColorID)
+                .findFirst()
+                .orElse(null);
+
+        Integer sizeID = sizes.stream().filter(s->s.getEuSize() == size).map(Size::getSizeID).findFirst().orElse(null);
+
+
+        Integer productID = products.stream()
+                .filter(p -> p.getSizeID() == sizeID && p.getColorID() == colorID && p.getModelName().equals(modelName))
+                .map(Product::getProductID)
+                .findFirst()
+                .orElse(null);
+
+        setProductID(productID);
+
+        return inventories.stream().filter(i->i.getProductID() == productID).map(Inventory::getInStock) .findFirst()
+                .orElse(0);
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 }

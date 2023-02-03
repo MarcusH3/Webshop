@@ -1,19 +1,55 @@
 package Gui;
 
+import Database.*;
+import Utilities.SumLambda;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TopFive extends JPanel {
-    private JList<String> list;
-    private ArrayList<String> stringList;
+
+    private final List<Product> products;
+    private final List<Order> orders;
+    private final List<CoordinationTable> coordinationTables;
+    private final List<OrderDetail> orderDetails;
+    private final List<Inventory> inventories;
+
     public TopFive(Buttons buttons) {
+    products = buttons.getGui().getMain().getProduct();
+    orders =  buttons.getGui().getMain().getOrders();
+    coordinationTables = buttons.getGui().getMain().getCTable();
+    orderDetails = buttons.getGui().getMain().getOrderDetail();
+    inventories = buttons.getGui().getMain().getInventory();
+
+    getQuantitiesSold();
+
         setPreferredSize(new Dimension(700,763));
-        stringList = buttons.getStringList();
-        list = new JList<>(stringList.toArray(new String[stringList.size()]));
-        JScrollPane jScrollPane = new JScrollPane(list);
-        jScrollPane.setPreferredSize(new Dimension(700,763));
-        add(jScrollPane);
+
     }
+    public void getQuantitiesSold(){
+        List<String> modelName;
+        List<Integer> inventoryIDTemp;
+        List<Integer> quantity;
+
+        inventoryIDTemp = orderDetails.stream().filter(o->o.getQuantity() > 0).map(OrderDetail::getInventoryID).collect(Collectors.toList());
+
+        quantity = orderDetails.stream().filter(o-> inventoryIDTemp.stream().
+                anyMatch(i -> i.intValue() == o.getInventoryID())).map(OrderDetail::getQuantity).collect(Collectors.toList());
+
+        modelName = products.stream()
+                .filter(p-> inventoryIDTemp.stream().anyMatch(i -> i.intValue() == p.getProductID()))
+                .map(Product::getModelName).distinct()
+                .collect(Collectors.toList());
+
+
+
+
+
+        System.out.println("hej;");
+    }
+
 
 }

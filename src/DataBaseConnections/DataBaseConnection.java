@@ -501,7 +501,109 @@ public static void connectAndQueryDB(String username, String password){
         }
         return topFive;
     }
+    public static List<Order> getOrders(String username, String password){
 
+
+        List<Order> orderList = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from orders");
+
+            while(resultSet.next()){
+                int orderID = resultSet.getInt("orders.orderID");
+                int coordinationTableID = resultSet.getInt("orders.coordinationTableID");
+                Timestamp orderDate = resultSet.getTimestamp("orders.orderDate");
+                Timestamp lastUpdated = resultSet.getTimestamp("orders.lastUpdated");
+
+                orderList.add(new Order(orderID,coordinationTableID,orderDate,lastUpdated));
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public static List<CoordinationTable> getCTable(String username, String password){
+
+
+        List<CoordinationTable> coordinationTableList = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from coordinationtable");
+
+            while(resultSet.next()){
+                int coordinationtableID = resultSet.getInt("coordinationtable.coordinationtableID");
+                int customerID = resultSet.getInt("coordinationtable.customerID");
+                Timestamp created = resultSet.getTimestamp("coordinationtable.created");
+                Timestamp lastUpdated = resultSet.getTimestamp("coordinationtable.lastUpdated");
+
+                coordinationTableList.add(new CoordinationTable(coordinationtableID,customerID,created,lastUpdated));
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return coordinationTableList;
+    }
+
+    public static List<OrderDetail> getOrderDetail(String username, String password){
+
+
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * from orderdetail");
+
+            while(resultSet.next()){
+                int orderDetailID = resultSet.getInt("orderDetail.orderDetailID");
+                int coordinationTableID = resultSet.getInt("orderDetail.coordinationTableID");
+                int inventoryID = resultSet.getInt("orderDetail.inventoryID");
+                int quantity = resultSet.getInt("orderDetail.quantity");
+                Timestamp created = resultSet.getTimestamp("orderDetail.created");
+                Timestamp lastUpdated = resultSet.getTimestamp("orderDetail.lastUpdated");
+
+                orderDetailList.add(new OrderDetail(orderDetailID,coordinationTableID,inventoryID,quantity,created,lastUpdated));
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return orderDetailList;
+    }
     public static List<City> getCity(String username, String password){
 
 

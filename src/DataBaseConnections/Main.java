@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    public List<Inventory> getInventory(){
+        List<Inventory> inventories;
+        inventories = DataBaseConnection.getInventory("root","marcusedlund");
+        return inventories;
+    }
+
     public List<Category> getCategories(){
         List<Category> categories;
         categories = DataBaseConnection.getCategory("root","marcusedlund");
@@ -24,16 +30,6 @@ public class Main {
         List<City> city = new ArrayList<>();
         city = DataBaseConnection.getCity("root", "marcusedlund");
         return city;
-    }
-    public List<String> getProductByCategory(String gender, String category){
-        List<String> products = new ArrayList<>();
-        products = DataBaseConnection.getModelByCategory("root", "marcusedlund", gender, category);
-        return products;
-    }
-    public List<String> getCategoryByGender(String gender){
-        List<String> categories = new ArrayList<>();
-        categories = DataBaseConnection.getCategoryByGender("root", "marcusedlund", gender);
-        return categories;
     }
     public List<GenderCategory> getGender(){
         List<GenderCategory> genders;
@@ -56,22 +52,22 @@ public class Main {
         sizes = DataBaseConnection.getSize("root", "marcusedlund");
         return sizes;
     }
-    public List<Inventory> getInventory(){
-        List<Inventory> inventories;
-        inventories = DataBaseConnection.getInventory("root", "marcusedlund");
-        return inventories;
+    public List<Order> getOrders(){
+        List<Order> orders;
+        orders = DataBaseConnection.getOrders("root", "marcusedlund");
+        return orders;
+    }
+    public List<CoordinationTable> getCTable(){
+        List<CoordinationTable> coordinationTables;
+        coordinationTables = DataBaseConnection.getCTable("root", "marcusedlund");
+        return coordinationTables;
+    }
+    public List<OrderDetail> getOrderDetail(){
+        List<OrderDetail> orderDetailList;
+        orderDetailList = DataBaseConnection.getOrderDetail("root", "marcusedlund");
+        return orderDetailList;
     }
 
-    public List<String> getColorByProduct(String productName){
-        List<String> products = new ArrayList<>();
-        products = DataBaseConnection.getColorByProduct("root", "marcusedlund", productName);
-        return products;
-    }
-    public List<String> getSizeByProduct(String productName){
-        List<String> products = new ArrayList<>();
-        products = DataBaseConnection.getSizeByProduct("root", "marcusedlund", productName);
-        return products;
-    }
     /*public List<String> getProduct(){
         List<String> products = new ArrayList<>();
         products = DataBaseConnection.getProduct("root", "marcusedlund");
