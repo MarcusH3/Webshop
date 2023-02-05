@@ -73,11 +73,6 @@ public class Main {
         products = DataBaseConnection.getProduct("root", "marcusedlund");
         return products;
     }*/
-    public ArrayList<String> getTopFive(){
-        ArrayList<String> topFive = new ArrayList<>();
-       topFive = DataBaseConnection.getTopFive("root", "marcusedlund");
-       return topFive;
-    }
     public ArrayList<Customer> getCustomer(){
         ArrayList<Customer> customers;
         customers = DataBaseConnection.getCustomer("root", "marcusedlund");

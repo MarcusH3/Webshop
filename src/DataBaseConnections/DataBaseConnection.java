@@ -459,50 +459,7 @@ public static void connectAndQueryDB(String username, String password){
             return isAuthenticated;
         }
     }*/
-    public static ArrayList<String> getTopFive(String username, String password){
-
-        ArrayList<String> topFive = new ArrayList<>();
-        try {
-            properties = new Properties();
-            InputStream input = new FileInputStream("Res/config.properties");
-            properties.load(input);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        try(Connection con = DriverManager.getConnection(
-                properties.getProperty("urlString"), username,password)){
-            Statement statement = con.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT product.modelName, sum(orderdetail.quantity) as 'quantity'\n" +
-                    "from product\n" +
-                    "join inventory\n" +
-                    "on product.productID = inventory.productID\n" +
-                    "join orderdetail\n" +
-                    "on orderdetail.inventoryID = inventory.inventoryID\n" +
-                    "join coordinationTable\n" +
-                    "on coordinationTable.coordinationTableID = orderdetail.coordinationTableID\n" +
-                    "join orders\n" +
-                    "on orders.coordinationTableID = coordinationTable.coordinationTableID\n" +
-                    "group by product.modelName\n" +
-                    "ORDER BY sum(orderdetail.quantity) DESC\n" +
-                    "limit 5");
-
-            while(resultSet.next()){
-                String modelName = resultSet.getString("product.ModelName");
-                String quantity = resultSet.getString("quantity");
-
-                topFive.add(modelName + " " + quantity);
-            }
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return topFive;
-    }
     public static List<Order> getOrders(String username, String password){
-
 
         List<Order> orderList = new ArrayList<>();
         try {

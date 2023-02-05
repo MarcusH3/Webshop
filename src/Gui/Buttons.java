@@ -36,6 +36,10 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private final JButton checkOutButton;
     private final JButton proceedButton;
     private final JButton discardButton;
+    private final JButton colorButton;
+    private final JButton sizeButton;
+    private final JButton modelButton;
+    private final JButton cityButton;
     private JTextField searchBar;
     private Gui gui;
     private final Dimension introButtonDimension;
@@ -110,7 +114,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         introButton1 = new JButton("BUTTON");
         introButton2 = new JButton("TOP PRODUCTS");
-        introButton3 = new JButton("NEW LISTINGS");
+        introButton3 = new JButton("LISTINGS");
         introButton4 = new JButton("EXPLORE");
         introButton5 = new JButton("SETTINGS");
         introButton6 = new JButton("RETURN");
@@ -281,6 +285,29 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         discardButton = new JButton("NO");
         discardButton.setBackground(Color.white);
         discardButton.addActionListener(this);
+
+        modelButton = new JButton("MODEL");
+        modelButton.setBackground(Color.white);
+        modelButton.addActionListener(this);
+
+        colorButton = new JButton("COLOR");
+        colorButton.setBackground(Color.white);
+        colorButton.addActionListener(this);
+
+        sizeButton = new JButton("SIZE");
+        sizeButton.setBackground(Color.white);
+        sizeButton.addActionListener(this);
+
+        cityButton = new JButton("CITY");
+        cityButton.setBackground(Color.white);
+        cityButton.addActionListener(this);
+
+        modelButton.setMinimumSize(new Dimension(100,70));
+        colorButton.setMinimumSize(new Dimension(100,70));
+        sizeButton.setMinimumSize(new Dimension(100,70));
+        cityButton.setMinimumSize(new Dimension(100,70));
+
+
     }
 
     public static ImageIcon getImageIcon(String path){
@@ -338,14 +365,13 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     System.out.println("Woman");
 
                 } else if (e.getSource()== introButton2) {
-                    stringList = gui.getMain().getTopFive();
                     setState(State.TOP_FIVE);
                     gui.updateGui();
                 }
                 else if (e.getSource()== introButton3) {
                     setPreviousState(getState());
                     System.out.println("NEW LISTINGS");
-                    setState(State.NOT_FOUND);
+                    setState(State.LISTINGS);
                     gui.updateGui();
                 }
                 else if (e.getSource()== introButton4) {
@@ -577,5 +603,21 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public JButton getDiscardButton() {
         return discardButton;
+    }
+
+    public JButton getColorButton() {
+        return colorButton;
+    }
+
+    public JButton getSizeButton() {
+        return sizeButton;
+    }
+
+    public JButton getModelButton() {
+        return modelButton;
+    }
+
+    public JButton getCityButton() {
+        return cityButton;
     }
 }

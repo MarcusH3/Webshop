@@ -21,6 +21,7 @@ public class Gui implements ActionListener {
     private JPanel topFiveMenu;
     private JPanel productPanel;
     private JPanel cart;
+    private JPanel listings;
     private Buttons buttons;
     JList<String> jList;
     private boolean running;
@@ -118,12 +119,14 @@ public class Gui implements ActionListener {
                introPanel.setVisible(true);
                backPanel.add(introPanel);
            }
-            case WOMAN, MAN, UNISEX -> {
-                genderPanel.setVisible(false);
-                backPanel.remove(genderPanel);
-                categoryPanel.setVisible(true);
-                backPanel.add(categoryPanel);
-            }
+           case LISTINGS -> {
+               listings = new Listings(buttons);
+               introPanel.add(leftAlignedMenu);
+               introPanel.add(listings);
+               introPanel.setVisible(true);
+               backPanel.add(introPanel);
+           }
+
            case CART -> {
                cart = new Cart(buttons);
                introPanel.add(leftAlignedMenu);

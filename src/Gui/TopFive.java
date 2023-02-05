@@ -28,11 +28,14 @@ public class TopFive extends JPanel {
     private final  List<String> topFive;
 
     public TopFive(Buttons buttons) {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     products = buttons.getGui().getMain().getProduct();
     orders =  buttons.getGui().getMain().getOrders();
     coordinationTables = buttons.getGui().getMain().getCTable();
     orderDetails = buttons.getGui().getMain().getOrderDetail();
     inventories = buttons.getGui().getMain().getInventory();
+
+    test();
 
     quantity = getQuantity();
     inventoryIDTemp = getInventoryIDTemp();
@@ -74,6 +77,23 @@ public class TopFive extends JPanel {
             tempStringList.add(tempTopFive.get(i)[0] + " " + tempTopFive.get(i)[1]);
         }
         return tempStringList;
+    }
+
+
+    public void test(){
+        List<String> test;
+        List<Integer> temp;
+
+        temp = orderDetails.stream().map(OrderDetail::getOrderDetailID).collect(Collectors.toList());
+
+        test = products.stream().filter(p-> inventories.stream()
+                .anyMatch(i-> orderDetails.stream()
+                        .anyMatch(o-> temp.stream()
+                                .anyMatch(t -> t.intValue() == o.getOrderDetailID() && o.getInventoryID() == i.getInventoryID() &&
+                                        i.getProductID() == p.getProductID())))).map(Product::getModelName).collect(Collectors.toList());
+
+
+        System.out.println(test);
     }
 
     public List<Integer> getInventoryIDTemp() {

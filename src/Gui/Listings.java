@@ -1,0 +1,442 @@
+package Gui;
+
+import DataBaseConnections.DataBaseConnection;
+import Database.*;
+import Utilities.IntegerListOperation;
+import Utilities.StringListOperation;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.Color;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class Listings extends JPanel {
+    private final JPanel north;
+    private final JPanel west;
+    private final JPanel center;
+    private final JPanel east;
+    private final JPanel south;
+    private final JButton modelButton;
+    private final JButton colorButton;
+    private final JButton sizeButton;
+    private final JButton cityButton;
+    private final List<Product> products;
+    private final List<Database.Color> colors;
+    private final List<Size> sizes;
+    private final List<Order> orders;
+    private List<OrderDetail> orderDetails;
+    private final List<Customer> customers;
+    private final List<CoordinationTable> coordinationTables;
+    private final List<Inventory> inventories;
+    private final List<City> cities;
+    private final JPanel centerListing1;
+    private final JPanel centerListing2;
+    private final JPanel centerListing3;
+    private final JPanel centerListing4;
+
+    JComboBox comboBox;
+    JComboBox comboBox1;
+    JComboBox comboBox2;
+
+    public Listings(Buttons buttons) {
+        products = buttons.getGui().getMain().getProduct();
+        colors = buttons.getGui().getMain().getColor();
+        sizes = buttons.getGui().getMain().getSize();
+        orders = buttons.getGui().getMain().getOrders();
+        orderDetails = buttons.getGui().getMain().getOrderDetail();
+        customers = buttons.getGui().getMain().getCustomer();
+        coordinationTables = buttons.getGui().getMain().getCTable();
+        inventories = buttons.getGui().getMain().getInventory();
+        cities = buttons.getGui().getMain().getCity();
+
+        setBackground(Color.white);
+        setPreferredSize(new Dimension(700,763));
+        setLayout(new BorderLayout());
+
+
+        north= new JPanel();
+        north.setPreferredSize(new Dimension(700, 100));
+        north.setBackground(Color.white);
+
+        west = new JPanel();
+        west.setPreferredSize(new Dimension(100,563));
+        west.setBackground(Color.white);
+
+
+        center = new JPanel();
+        center.setPreferredSize(new Dimension(500,563));
+        center.setBackground(Color.white);
+
+        centerListing1 = new JPanel();
+        centerListing1.setPreferredSize(new Dimension(500,563));
+        centerListing1.setBackground(Color.white);
+        centerListing1.setLayout(new BoxLayout(centerListing1, BoxLayout.Y_AXIS));
+
+        centerListing2 = new JPanel();
+        centerListing2.setPreferredSize(new Dimension(500,563));
+        centerListing2.setBackground(Color.white);
+        centerListing2.setLayout(new BoxLayout(centerListing2, BoxLayout.Y_AXIS));
+
+        centerListing3 = new JPanel();
+        centerListing3.setPreferredSize(new Dimension(500,563));
+        centerListing3.setBackground(Color.white);
+        centerListing3.setLayout(new BoxLayout(centerListing3, BoxLayout.Y_AXIS));
+
+        centerListing4 = new JPanel();
+        centerListing4.setPreferredSize(new Dimension(500,563));
+        centerListing4.setBackground(Color.white);
+        centerListing4.setLayout(new BoxLayout(centerListing4, BoxLayout.Y_AXIS));
+
+        center.add(centerListing1);
+        center.add(centerListing2);
+        center.add(centerListing3);
+        center.add(centerListing4);
+
+        east = new JPanel();
+        east.setPreferredSize(new Dimension(100,563));
+        east.setBackground(Color.cyan);
+
+        south = new JPanel();
+        south.setPreferredSize(new Dimension(700, 100));
+        south.setBackground(Color.white);
+
+        modelButton = buttons.getModelButton();
+        colorButton = buttons.getColorButton();
+        sizeButton = buttons.getSizeButton();
+        cityButton = buttons.getCityButton();
+
+        modelButton.setMinimumSize(new Dimension(100,70));
+        colorButton.setMinimumSize(new Dimension(100,70));
+        sizeButton.setMinimumSize(new Dimension(100,70));
+
+        //table.setVisible(false);
+        modelButton.addActionListener(e->{
+            comboBox.setVisible(true);
+            comboBox1.setVisible(false);
+            comboBox2.setVisible(false);
+
+        });
+
+        colorButton.addActionListener(e->{
+            comboBox.setVisible(false);
+            comboBox1.setVisible(true);
+            comboBox2.setVisible(false);
+        });
+
+        sizeButton.addActionListener(e->{
+            comboBox.setVisible(false);
+            comboBox1.setVisible(false);
+            comboBox2.setVisible(true);
+        });
+
+        cityButton.addActionListener(e->{
+            for (String item : byCity()){
+                JLabel label2 = new JLabel(item);
+                centerListing4.add(label2);
+                centerListing1.setVisible(false);
+                centerListing2.setVisible(false);
+                centerListing3.setVisible(false);
+                centerListing4.setVisible(true);
+
+                comboBox.setVisible(false);
+                comboBox1.setVisible(false);
+                comboBox2.setVisible(false);
+
+
+            }
+            centerListing4.repaint();
+        });
+
+        comboBox = new JComboBox<>();
+        comboBox.setBackground(Color.white);
+        comboBox.addItem("Select Model");
+        products.stream().map(Product::getModelName).distinct().forEach(comboBox::addItem);
+
+        comboBox1 = new JComboBox<>();
+        comboBox1.setBackground(Color.white);
+        comboBox1.addItem("Select Color");
+        colors.stream().map(Database.Color::getColorName).distinct().forEach(comboBox1::addItem);
+
+        comboBox2 = new JComboBox<>();
+        comboBox2.setBackground(Color.white);
+        comboBox2.addItem("Select Size");
+        sizes.stream().map(Size::getEuSize).distinct().forEach(comboBox2::addItem);
+
+
+        north.add(comboBox);
+        north.add(comboBox1);
+        north.add(comboBox2);
+
+        comboBox.setVisible(false);
+        comboBox1.setVisible(false);
+        comboBox2.setVisible(false);
+
+
+
+        comboBox.addActionListener(e->{
+
+            if(comboBox.getSelectedItem() != "Select Model"){
+                centerListing1.removeAll();
+                if(getNameByProduct(comboBox.getSelectedItem().toString()).size() == 0){
+                    centerListing1.removeAll();
+                    centerListing1.repaint();
+                }
+
+                for (String item : getNameByProduct(comboBox.getSelectedItem().toString())) {
+                        JLabel label2 = new JLabel(item);
+                        centerListing1.add(label2);
+                        centerListing1.setVisible(true);
+                        centerListing2.setVisible(false);
+                        centerListing3.setVisible(false);
+
+                }
+                }
+        });
+
+        comboBox1.addActionListener(e->{
+            if(comboBox1.getSelectedItem() != "Select Color"){
+                centerListing2.removeAll();
+                if(getNameByColor(comboBox1.getSelectedItem().toString()).size() == 0){
+                    centerListing2.removeAll();
+                    centerListing2.repaint();
+                }
+
+                for (String item : getNameByColor(comboBox1.getSelectedItem().toString())) {
+                    JLabel label2 = new JLabel(item);
+                    centerListing2.add(label2);
+                    centerListing2.setVisible(true);
+                    centerListing1.setVisible(false);
+                    centerListing3.setVisible(false);
+
+                }
+            }
+        });
+
+        comboBox2.addActionListener(e->{
+            if(comboBox2.getSelectedItem() != "Select Size"){
+                centerListing3.removeAll();
+                if(getNameBySize(comboBox2.getSelectedItem().toString()).size() == 0){
+                    centerListing3.removeAll();
+                    centerListing3.repaint();
+                }
+
+                for (String item : getNameBySize(comboBox2.getSelectedItem().toString())) {
+                    JLabel label2 = new JLabel(item);
+                    centerListing3.add(label2);
+                    centerListing3.setVisible(true);
+                    centerListing1.setVisible(false);
+                    centerListing2.setVisible(false);
+
+                }
+            }
+        });
+
+
+        west.add(modelButton);
+        west.add(colorButton);
+        west.add(sizeButton);
+        west.add(cityButton);
+
+        add(north, BorderLayout.NORTH);
+        add(west, BorderLayout.WEST);
+        add(center, BorderLayout.CENTER);
+        add(east, BorderLayout.EAST);
+        add(south, BorderLayout.SOUTH);
+    }
+
+    public List<String> getNameByColor(String colorName){
+        List<String> listToReturn = new ArrayList<>();
+        List<List<String>> result = orders.stream()
+                .flatMap(order -> coordinationTables.stream()
+                        .filter(coordTable -> Objects.equals(coordTable.getCoordinationTableID(), order.getCoordinationTableID()))
+                        .flatMap(coordTable -> orderDetails.stream()
+                                .filter(orderDetail -> Objects.equals(orderDetail.getCoordinationTableID(), coordTable.getCoordinationTableID()))
+                                .flatMap(orderDetail -> inventories.stream()
+                                        .filter(inventory -> Objects.equals(inventory.getInventoryID(), orderDetail.getInventoryID()))
+                                        .flatMap(inventory -> products.stream()
+                                                .filter(product -> Objects.equals(product.getProductID(), inventory.getProductID()))
+                                                .flatMap(product -> colors.stream()
+                                                        .filter(color -> Objects.equals(color.getColorID(), product.getColorID()))
+                                                        .map(color -> Arrays.asList(Integer.toString(coordTable.getCustomerID()), color.getColorName())))))))
+                .distinct().collect(Collectors.toList());
+
+        for(List<String> list : result){
+            int temp = Integer.parseInt(list.get(0));
+            if(list.stream().anyMatch(l->l.equals(colorName))) {
+                listToReturn.add(getCustomer(temp) + " " + getAddress(temp));
+            }
+        }
+        return listToReturn;
+
+    }
+
+    public List<String> getNameBySize(String sizeString){
+
+        List<String> listToReturn = new ArrayList<>();
+        List<List<String>> result = orders.stream()
+                .flatMap(order -> coordinationTables.stream()
+                        .filter(coordTable -> Objects.equals(coordTable.getCoordinationTableID(), order.getCoordinationTableID()))
+                        .flatMap(coordTable -> orderDetails.stream()
+                                .filter(orderDetail -> Objects.equals(orderDetail.getCoordinationTableID(), coordTable.getCoordinationTableID()))
+                                .flatMap(orderDetail -> inventories.stream()
+                                        .filter(inventory -> Objects.equals(inventory.getInventoryID(), orderDetail.getInventoryID()))
+                                        .flatMap(inventory -> products.stream()
+                                                .filter(product -> Objects.equals(product.getProductID(), inventory.getProductID()))
+                                                .flatMap(product -> sizes.stream()
+                                                        .filter(size -> Objects.equals(size.getSizeID(), product.getSizeID()))
+                                                        .map(size -> Arrays.asList(Integer.toString(order.getOrderID()), Double.toString(size.getEuSize())))
+                                                ))))).distinct().collect(Collectors.toList());
+
+            for(List<String> list : result){
+                int temp = Integer.parseInt(list.get(0));
+                if(list.stream().anyMatch(l->l.equals(sizeString))) {
+                    listToReturn.add(getCustomer(temp) + " " + getAddress(temp));
+                }
+            }
+            return listToReturn;
+    }
+    public List<String> getNameByProduct(String modelName){
+        List<String> listToReturn = new ArrayList<>();
+        List<List<String>>result = orders.stream()
+                .flatMap(order -> coordinationTables.stream()
+                        .filter(coordTable -> Objects.equals(coordTable.getCoordinationTableID(), order.getCoordinationTableID()))
+                        .flatMap(coordTable -> orderDetails.stream()
+                                .filter(orderDetail -> Objects.equals(orderDetail.getCoordinationTableID(), coordTable.getCoordinationTableID()))
+                                .flatMap(orderDetail -> inventories.stream()
+                                        .filter(inventory -> Objects.equals(inventory.getInventoryID(), orderDetail.getInventoryID()))
+                                        .flatMap(inventory -> products.stream()
+                                                .filter(product -> Objects.equals(product.getProductID(), inventory.getProductID()))
+                                                .map(product -> Arrays.asList(Integer.toString(order.getOrderID()), product.getModelName()))))))
+                .distinct().collect(Collectors.toList());
+
+        for(List<String> list : result){
+            int temp = Integer.parseInt(list.get(0));
+            if(list.stream().anyMatch(l->l.equals(modelName))) {
+                listToReturn.add(getCustomer(temp) + " " + getAddress(temp));
+            }
+        }
+        return listToReturn;
+
+    }
+
+    public String getCustomer(int id){
+
+        String customerFullName =
+                customers.stream()
+                        .filter(c -> c.getId() == coordinationTables.stream()
+                                .filter(ct -> ct.getCoordinationTableID() == orders.stream()
+                                        .filter(o -> o.getOrderID() == id)
+                                        .findFirst()
+                                        .get()
+                                        .getCoordinationTableID())
+                                .findFirst()
+                                .get()
+                                .getCustomerID())
+                        .findFirst()
+                        .get()
+                        .getFullName();
+
+return customerFullName;
+
+
+/*        return orders.stream()
+            .flatMap(order -> coordinationTables.stream()
+                    .filter(coordinationTable -> order.getCoordinationTableID() == coordinationTable.getCoordinationTableID())
+                    .flatMap(coordinationTable -> orderDetails.stream()
+                            .filter(orderDetail -> coordinationTable.getCoordinationTableID() == orderDetail.getCoordinationTableID())
+                            .flatMap(orderDetail -> customers.stream()
+                                    .filter(customer -> coordinationTable.getCustomerID() == id)
+                                    .map(customer -> customer.getFullName())
+                            ))).findFirst().orElse(null);*/
+
+    }
+    public String getAddress(int id){
+        return customers.stream().filter(c->c.getId() == id).map(Customer::getCustomerAddress).findAny().orElse(null);
+    }
+
+    public List<String> byCity(){
+        List<Double> price = new ArrayList<>();
+        List<Integer> id = new ArrayList<>();
+        List<String> cityName = new ArrayList<>();
+        List<String[]> cityAndPrice = new ArrayList<>();
+        List<String> listToReturn = new ArrayList<>();
+
+        List<Object> result = products.stream()
+                .filter(p -> inventories.stream()
+                        .anyMatch(i -> orderDetails.stream()
+                                .anyMatch(od -> coordinationTables.stream()
+                                        .anyMatch(c -> orders.stream()
+                                                .anyMatch(o -> o.getCoordinationTableID() == c.getCoordinationTableID()
+                                                        && c.getCoordinationTableID() == od.getCoordinationTableID()
+                                                        && od.getInventoryID() == i.getInventoryID()
+                                                        && p.getProductID() == i.getInventoryID())))))
+                .map(p -> Arrays.asList(p.getProductID(), p.getPrice())).distinct()
+                .collect(Collectors.toList());
+
+
+
+for (Object obj : result){
+    String temp = obj.toString();
+    String[] arr = temp.split(",");
+    String resultString = arr[1];
+    resultString = resultString.replace("]", "");
+    Double number = Double.parseDouble(resultString.trim()); // number will be 699
+    price.add(number);
+}
+        for (Object obj : result){
+            String temp = obj.toString();
+            String[] arr = temp.split(",");
+            String resultString = arr[0];
+            resultString = resultString.replace("[", "");
+            Integer number = Integer.parseInt(resultString.trim()); // number will be 699
+            id.add(number);
+        }
+        for (Integer integer : id){
+            String name = cities.stream().filter(c-> customers.stream()
+                            .anyMatch(cu-> coordinationTables.stream()
+                                    .anyMatch(co->orderDetails.stream()
+                                            .anyMatch(o->c.getCityID() == cu.getCityID()
+                                                            && co.getCustomerID() == cu.getId()
+                                                            && co.getCoordinationTableID() == o.getCoordinationTableID()
+                                                            && integer == o.getInventoryID()))))
+                    .map(City::getCityName).findFirst().orElse(null);
+            cityName.add(name);
+        }
+
+        for(int i = 0; i < cityName.size(); i++){
+            String[] temp = {cityName.get(i), price.get(i).toString()};
+            cityAndPrice.add(temp);
+        }
+
+        StringListOperation listOperation = list -> {
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = i + 1; j < list.size(); j++) {
+                    if (list.get(i)[0].equals(list.get(j)[0])) {
+                        double temp1 = Double.valueOf(list.get(i)[1]);
+                        double temp2 = Double.valueOf(list.get(j)[1]);
+                        temp1 += temp2;
+                        list.get(i)[1] = Double.toString(temp1);
+                        list.remove(j);
+                    }
+                }
+            }
+        };
+
+        listOperation.manipulateList(cityAndPrice);
+
+
+        Collections.sort(cityAndPrice, Comparator.comparingDouble(arr -> Double.parseDouble(arr[1])));
+        Collections.reverse(cityAndPrice);
+
+        for(String[] str : cityAndPrice) {
+
+                String strToJoin = String.join(" ", str);
+            listToReturn.add(strToJoin);
+        }
+        return listToReturn;
+    }
+}
