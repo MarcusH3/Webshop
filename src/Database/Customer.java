@@ -2,7 +2,7 @@ package Database;
 
 public class Customer {
 
-        private int id;
+        private int customerID;
         private String customerFirstName ;
         private String customerLastName;
         private String customerAddress;
@@ -17,8 +17,8 @@ public class Customer {
 
         }
 
-        public Customer(int id, String firstName, String lastName, String phoneNumber, String email, String password, String address, int cityID) {
-            this.id = id;
+        public Customer(int customerID, String firstName, String lastName, String phoneNumber, String email, String password, String address, int cityID) {
+            this.customerID = customerID;
             this.customerFirstName = firstName;
             this.customerLastName = lastName;
             this.customerPhoneNumber = phoneNumber;
@@ -28,8 +28,8 @@ public class Customer {
             this.cityID = cityID;
         }
 
-        public int getId() {
-            return id;
+        public int getCustomerID() {
+            return customerID;
         }
 
         public String getEmail() {return customerEMail;}

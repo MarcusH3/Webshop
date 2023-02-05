@@ -2,9 +2,7 @@ package DataBaseConnections;
 
 import Database.*;
 
-import javax.xml.transform.Result;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -709,7 +707,7 @@ public static void connectAndQueryDB(String username, String password){
              CallableStatement cstmt = con.prepareCall("{CALL addToCart(?,?,?)}")) {
 
             cstmt.setInt(1, currentCustomerOrder);
-            cstmt.setInt(2, whoIsLoggedIn.getId());
+            cstmt.setInt(2, whoIsLoggedIn.getCustomerID());
             cstmt.setInt(3, id);
             cstmt.execute();
 
@@ -737,7 +735,7 @@ public static void connectAndQueryDB(String username, String password){
                  CallableStatement cstmt = con.prepareCall("{CALL remove_form_cart(?,?,?)}")) {
 
                 cstmt.setInt(1, currentCustomerOrder);
-                cstmt.setInt(2, whoIsLoggedIn.getId());
+                cstmt.setInt(2, whoIsLoggedIn.getCustomerID());
                 cstmt.setInt(3, id);
                 cstmt.execute();
 

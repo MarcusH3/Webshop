@@ -1,18 +1,14 @@
 package Gui;
 
-import DataBaseConnections.DataBaseConnection;
 import Database.*;
-import Utilities.IntegerListOperation;
 import Utilities.StringListOperation;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.Color;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Listings extends JPanel {
     private final JPanel north;
@@ -24,6 +20,8 @@ public class Listings extends JPanel {
     private final JButton colorButton;
     private final JButton sizeButton;
     private final JButton cityButton;
+    private final JButton customerOrders;
+    private final JButton customerSpending;
     private final List<Product> products;
     private final List<Database.Color> colors;
     private final List<Size> sizes;
@@ -57,18 +55,16 @@ public class Listings extends JPanel {
         setPreferredSize(new Dimension(700,763));
         setLayout(new BorderLayout());
 
-
         north= new JPanel();
         north.setPreferredSize(new Dimension(700, 100));
         north.setBackground(Color.white);
 
         west = new JPanel();
-        west.setPreferredSize(new Dimension(100,563));
+        west.setPreferredSize(new Dimension(150,563));
         west.setBackground(Color.white);
 
-
         center = new JPanel();
-        center.setPreferredSize(new Dimension(500,563));
+        center.setPreferredSize(new Dimension(450,563));
         center.setBackground(Color.white);
 
         centerListing1 = new JPanel();
@@ -108,6 +104,8 @@ public class Listings extends JPanel {
         colorButton = buttons.getColorButton();
         sizeButton = buttons.getSizeButton();
         cityButton = buttons.getCityButton();
+        customerOrders = buttons.getCustomerOrders();
+        customerSpending = buttons.getCustomerSpending();
 
         modelButton.setMinimumSize(new Dimension(100,70));
         colorButton.setMinimumSize(new Dimension(100,70));
@@ -240,6 +238,8 @@ public class Listings extends JPanel {
         west.add(colorButton);
         west.add(sizeButton);
         west.add(cityButton);
+        west.add(customerOrders);
+        west.add(customerSpending);
 
         add(north, BorderLayout.NORTH);
         add(west, BorderLayout.WEST);
@@ -327,7 +327,7 @@ public class Listings extends JPanel {
 
         String customerFullName =
                 customers.stream()
-                        .filter(c -> c.getId() == coordinationTables.stream()
+                        .filter(c -> c.getCustomerID() == coordinationTables.stream()
                                 .filter(ct -> ct.getCoordinationTableID() == orders.stream()
                                         .filter(o -> o.getOrderID() == id)
                                         .findFirst()
@@ -355,7 +355,7 @@ return customerFullName;
 
     }
     public String getAddress(int id){
-        return customers.stream().filter(c->c.getId() == id).map(Customer::getCustomerAddress).findAny().orElse(null);
+        return customers.stream().filter(c->c.getCustomerID() == id).map(Customer::getCustomerAddress).findAny().orElse(null);
     }
 
     public List<String> byCity(){
@@ -400,7 +400,7 @@ for (Object obj : result){
                             .anyMatch(cu-> coordinationTables.stream()
                                     .anyMatch(co->orderDetails.stream()
                                             .anyMatch(o->c.getCityID() == cu.getCityID()
-                                                            && co.getCustomerID() == cu.getId()
+                                                            && co.getCustomerID() == cu.getCustomerID()
                                                             && co.getCoordinationTableID() == o.getCoordinationTableID()
                                                             && integer == o.getInventoryID()))))
                     .map(City::getCityName).findFirst().orElse(null);

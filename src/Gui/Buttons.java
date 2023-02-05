@@ -40,6 +40,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private final JButton sizeButton;
     private final JButton modelButton;
     private final JButton cityButton;
+    private final JButton customerSpending;
+    private final JButton customerOrders;
     private JTextField searchBar;
     private Gui gui;
     private final Dimension introButtonDimension;
@@ -302,11 +304,18 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
         cityButton.setBackground(Color.white);
         cityButton.addActionListener(this);
 
+        customerOrders = new JButton("ORDERS PLACED");
+        customerOrders.setBackground(Color.white);
+        customerOrders.addActionListener(this);
+
+        customerSpending = new JButton("MONEY SPENT");
+        customerSpending.setBackground(Color.white);
+        customerSpending.addActionListener(this);
+
         modelButton.setMinimumSize(new Dimension(100,70));
         colorButton.setMinimumSize(new Dimension(100,70));
         sizeButton.setMinimumSize(new Dimension(100,70));
         cityButton.setMinimumSize(new Dimension(100,70));
-
 
     }
 
@@ -619,5 +628,13 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public JButton getCityButton() {
         return cityButton;
+    }
+
+    public JButton getCustomerSpending() {
+        return customerSpending;
+    }
+
+    public JButton getCustomerOrders() {
+        return customerOrders;
     }
 }
