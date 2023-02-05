@@ -42,6 +42,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private final JButton cityButton;
     private final JButton customerSpending;
     private final JButton customerOrders;
+    private int customerID;
     private JTextField searchBar;
     private Gui gui;
     private final Dimension introButtonDimension;
@@ -366,7 +367,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     gui.updateGui();
                 }
             }
-            case INTRO, NOT_FOUND, TOP_FIVE, PRODUCTS -> {
+            case INTRO, NOT_FOUND, TOP_FIVE, PRODUCTS, CART,LISTINGS-> {
                 if(e.getSource()==button1){
                     setPreviousState(getState());
                     setState(State.WOMAN);
@@ -636,5 +637,13 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public JButton getCustomerOrders() {
         return customerOrders;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 }

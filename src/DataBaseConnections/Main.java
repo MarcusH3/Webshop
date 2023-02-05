@@ -83,7 +83,11 @@ public class Main {
         products = (ArrayList<Product>) DataBaseConnection.getProduct("root","marcusedlund");
         return products;
     }
+    public void callStored(int orderID, int customerID, int productID) {
 
+        DataBaseConnection.callProcedure("root","marcusedlund", orderID, customerID, productID);
+
+    }
 
     public static void main(String[] args) {
        Gui.getInstance();

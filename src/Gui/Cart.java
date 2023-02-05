@@ -49,6 +49,12 @@ public class Cart extends JPanel{
         bottomPanel.add(discardButton);
 
         proceedButton.addActionListener(e->{
+            for(Integer integer : buttons.getProductID()){
+                buttons.getGui().getMain().callStored(1, 2, integer);
+            }
+            buttons.getProductID().clear();
+            buttons.setState(State.INTRO);
+            buttons.getGui().updateGui();
             System.out.println("ADD THIS TO STORED PROCEDURE");
         });
         discardButton.addActionListener(e->{
