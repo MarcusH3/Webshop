@@ -35,8 +35,8 @@ public class ProductPanel extends JPanel{
     private final List<Database.Color> colors;
     private final List<Size> sizes;
     private final List<Inventory> inventories;
-    private final  JButton addToCart;
-    private final  JButton checkOutButton;
+    private JButton addToCart;
+    private JButton checkOutButton;
     private int productID;
 
     public ProductPanel(Buttons buttons) {
@@ -56,13 +56,14 @@ public class ProductPanel extends JPanel{
         leftPanel.setBackground(Color.red);*/
 
 
-
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(700,100));
         bottomPanel.setMaximumSize(new Dimension(700,100));
         bottomPanel.setBackground(Color.white);
 
-        addToCart = buttons.getAddToCartButton();
+        addToCart = new JButton("ADD 2 CART");
+        addToCart.setBackground(Color.white);
+
         checkOutButton = buttons.getCheckOutButton();
         bottomPanel.add(addToCart);
         bottomPanel.add(checkOutButton);
@@ -161,9 +162,13 @@ public class ProductPanel extends JPanel{
            }
        });
         checkOutButton.addActionListener(e->{
-            if(!buttons.getProductID().isEmpty()){
-                buttons.setState(State.CART);
-                buttons.getGui().updateGui();
+            if(buttons.getProductID() != null) {
+                if (!buttons.getProductID().isEmpty()) {
+                    buttons.setState(State.CART);
+                    buttons.getGui().updateGui();
+                } else {
+                    System.out.println("No products in cart");
+                }
             }
             else{
                 System.out.println("No products in cart");

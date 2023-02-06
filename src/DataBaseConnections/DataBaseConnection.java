@@ -18,6 +18,7 @@ private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (custom
         ",customerAddress,customerEmail,customerPassword,customerPhoneNumber,CityID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private static final String INSERT_CITY_SQL = "INSERT INTO city (cityName) VALUES (?)";
+    private static final String sql_string = "call addTocart(?,?,?)";
 
     private static Properties properties;
 
@@ -749,4 +750,29 @@ public static void connectAndQueryDB(String username, String password){
                 e.printStackTrace();
             }
         }
+    public static void callProcedure(String username, String password, int orderID, int customerID, int productID){
+
+        try {
+            properties = new Properties();
+            InputStream input = new FileInputStream("res/config.properties");
+            properties.load(input);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        };
+
+        try(Connection con = DriverManager.getConnection(
+                properties.getProperty("urlString"), username,password)){
+
+
+            CallableStatement cs = con.prepareCall(sql_string);
+            cs.setNull(2, Types.INTEGER);
+            cs.setInt(1, customerID);
+            cs.setInt(3, productID);
+            cs.execute();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
+

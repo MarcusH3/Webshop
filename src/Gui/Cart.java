@@ -43,21 +43,25 @@ public class Cart extends JPanel{
         bottomPanel.setMaximumSize(new Dimension(700,100));
         bottomPanel.setBackground(Color.white);
 
-        proceedButton = buttons.getProceedButton();
+
+        proceedButton = new JButton("YES");
+        proceedButton.setBackground(Color.white);
         discardButton = buttons.getDiscardButton();
         bottomPanel.add(proceedButton);
         bottomPanel.add(discardButton);
+
 
         proceedButton.addActionListener(e->{
             for(Integer integer : buttons.getProductID()){
                 buttons.getGui().getMain().callStored(1, 2, integer);
             }
-            buttons.getProductID().clear();
+            buttons.setProductID(0);
             buttons.setState(State.INTRO);
             buttons.getGui().updateGui();
             System.out.println("ADD THIS TO STORED PROCEDURE");
         });
         discardButton.addActionListener(e->{
+            buttons.setProductID(0);
             buttons.getProductID().clear();
             buttons.setState(State.INTRO);
             buttons.getGui().updateGui();
@@ -83,6 +87,7 @@ public class Cart extends JPanel{
             JLabel jLabel = new JLabel(string);
             jLabel.setFont(font);
             centerPanel.add(jLabel);
+            jLabel.repaint();
         }
 
 

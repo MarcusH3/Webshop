@@ -35,6 +35,8 @@ public class Listings extends JPanel {
     private final JPanel centerListing2;
     private final JPanel centerListing3;
     private final JPanel centerListing4;
+    private final JPanel centerListing5;
+    private final JPanel centerListing6;
 
     JComboBox comboBox;
     JComboBox comboBox1;
@@ -87,10 +89,22 @@ public class Listings extends JPanel {
         centerListing4.setBackground(Color.white);
         centerListing4.setLayout(new BoxLayout(centerListing4, BoxLayout.Y_AXIS));
 
+        centerListing5 = new JPanel();
+        centerListing5.setPreferredSize(new Dimension(500,563));
+        centerListing5.setBackground(Color.white);
+        centerListing5.setLayout(new BoxLayout(centerListing5, BoxLayout.Y_AXIS));
+
+        centerListing6 = new JPanel();
+        centerListing6.setPreferredSize(new Dimension(500,563));
+        centerListing6.setBackground(Color.white);
+        centerListing6.setLayout(new BoxLayout(centerListing6, BoxLayout.Y_AXIS));
+
         center.add(centerListing1);
         center.add(centerListing2);
         center.add(centerListing3);
         center.add(centerListing4);
+        center.add(centerListing5);
+        center.add(centerListing6);
 
         east = new JPanel();
         east.setPreferredSize(new Dimension(100,563));
@@ -131,6 +145,48 @@ public class Listings extends JPanel {
             comboBox2.setVisible(true);
         });
 
+        customerSpending.addActionListener(e->{
+            for (String item : getCustomersTotalSpent()){
+                JLabel label2 = new JLabel(item);
+                centerListing5.add(label2);
+                centerListing1.setVisible(false);
+                centerListing2.setVisible(false);
+                centerListing3.setVisible(false);
+                centerListing4.setVisible(false);
+                centerListing6.setVisible(false);
+                centerListing5.setVisible(true);
+
+                comboBox.setVisible(false);
+                comboBox1.setVisible(false);
+                comboBox2.setVisible(false);
+
+
+            }
+            centerListing5.repaint();
+
+            centerListing6.repaint();
+
+        });
+
+        customerOrders.addActionListener(e-> {
+            for (String item : getNumberOfOrdersByCustomer()) {
+                JLabel label2 = new JLabel(item);
+                centerListing6.add(label2);
+                centerListing1.setVisible(false);
+                centerListing2.setVisible(false);
+                centerListing3.setVisible(false);
+                centerListing4.setVisible(false);
+                centerListing5.setVisible(false);
+                centerListing6.setVisible(true);
+
+                comboBox.setVisible(false);
+                comboBox1.setVisible(false);
+                comboBox2.setVisible(false);
+
+
+            }
+        });
+
         cityButton.addActionListener(e->{
             for (String item : byCity()){
                 JLabel label2 = new JLabel(item);
@@ -139,6 +195,8 @@ public class Listings extends JPanel {
                 centerListing2.setVisible(false);
                 centerListing3.setVisible(false);
                 centerListing4.setVisible(true);
+                centerListing5.setVisible(false);
+                centerListing6.setVisible(false);
 
                 comboBox.setVisible(false);
                 comboBox1.setVisible(false);
@@ -439,4 +497,68 @@ for (Object obj : result){
         }
         return listToReturn;
     }
+    public List<String> getCustomersTotalSpent() {
+        List<String> customersTotalSpent = new ArrayList<>();
+        List<Integer> coordinationTableIDs = orderDetails.stream().map(OrderDetail::getCoordinationTableID).collect(Collectors.toList());        Set<Integer> uniqueCoordinationTableIDs = new HashSet<>(coordinationTableIDs);
+        for (Integer coordinationTableID : uniqueCoordinationTableIDs) {
+            double totalSpent = 0;
+            for (int i = 0; i < orderDetails.size(); i++) {
+                if (orderDetails.get(i).getCoordinationTableID() == coordinationTableID) {
+                    int finalI = i;
+                    double price = products.stream().filter(p -> p.getProductID() == inventories.get(finalI).getProductID()).findFirst().get().getPrice();
+                    totalSpent += price * orderDetails.get(i).getQuantity();
+
+                    int customerID = coordinationTables.stream().filter(c -> c.getCoordinationTableID() == coordinationTableID).findFirst().get().getCustomerID();
+                    customersTotalSpent.add(customers.stream().filter(c -> c.getCustomerID() == customerID).findFirst().get().getCustomerFirstName() + " "
+                            + customers.
+                            stream().
+                            filter(c -> c.getCustomerID() == customerID).
+                            findFirst().get().getCustomerLastName() + " - " + totalSpent);
+                }
+            }
+
+        }
+
+        customersTotalSpent.sort((o1, o2) -> {
+            String[] s1 = o1.split(" - ");
+            String[] s2 = o2.split(" - ");
+            if (Double.valueOf(s1[1]) < Double.valueOf(s2[1])) {
+                return -1;
+            } else if (Double.valueOf(s1[1]) > Double.valueOf(s2[1])) {
+                return 1;
+            }
+            return 0;
+        });
+        Collections.reverse(customersTotalSpent);
+        return customersTotalSpent;
+    }
+    public List<String> getNumberOfOrdersByCustomer(){
+        List<String> customersOrder = new ArrayList<>();
+        for(CoordinationTable coordinationTable: coordinationTables){
+            int customerID = coordinationTable.getCustomerID();
+            int orderCount = 0;
+            for(Order order: orders){
+                if(order.getCoordinationTableID() == customerID){
+                    orderCount++;
+                }
+            }
+            Optional<Customer> customer = customers.stream().filter(c -> c.getCustomerID() == customerID).findFirst();
+            if(customer.isPresent()){
+                customersOrder.add(customer.get().getCustomerFirstName() + " " + customer.get().getCustomerLastName() + " " + orderCount);
+            }
+        }
+
+        Collections.sort(customersOrder, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return Integer.parseInt(o2.split(" ")[2]) - Integer.parseInt(o1.split(" ")[2]);
+            }
+        });
+        Collections.reverse(customersOrder);
+        return customersOrder;
+    }
+
 }
+
+
+

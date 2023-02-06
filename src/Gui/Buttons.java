@@ -34,7 +34,6 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     private final JButton previousButton;
     private final JButton addToCartButton;
     private final JButton checkOutButton;
-    private final JButton proceedButton;
     private final JButton discardButton;
     private final JButton colorButton;
     private final JButton sizeButton;
@@ -58,8 +57,6 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         introButtonDimension = new Dimension(200,60);
         this.gui = gui;
-
-        productID = new ArrayList<>();
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -275,15 +272,11 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         addToCartButton = new JButton("ADD 2 CART");
         addToCartButton.setBackground(Color.white);
-        addToCartButton.addActionListener(this);
+        //addToCartButton.addActionListener(this);
 
         checkOutButton = new JButton("CHECK OUT");
         checkOutButton.setBackground(Color.white);
         checkOutButton.addActionListener(this);
-
-        proceedButton = new JButton("YES");
-        proceedButton.setBackground(Color.white);
-        proceedButton.addActionListener(this);
 
         discardButton = new JButton("NO");
         discardButton.setBackground(Color.white);
@@ -596,19 +589,29 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
     }
 
     public List<Integer> getProductID() {
-        return productID;
+        return this.productID;
     }
 
     public void setProductID(int productID) {
-        this.productID.add(productID);
+        if(productID == 0){
+            this.productID = null;
+        }
+        else{
+            if(this.productID == null){
+                this.productID = new ArrayList<>();
+                this.productID.add(productID);
+            }
+            else if(this.productID.size() == 0){
+                this.productID.add(productID);
+            }
+            else{
+                this.productID.add(productID);
+            }
+        }
     }
 
     public JButton getCheckOutButton() {
         return checkOutButton;
-    }
-
-    public JButton getProceedButton() {
-        return proceedButton;
     }
 
     public JButton getDiscardButton() {
