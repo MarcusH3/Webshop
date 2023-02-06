@@ -1,13 +1,19 @@
 package Gui;
 
+import Database.Customer;
 import Utilities.JTextFieldManipulator;
+import Utilities.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class WelcomePanel extends JPanel{
+    private final List<Customer> customers;
 
     public WelcomePanel(Buttons buttons){
+
+        customers=buttons.getGui().getMain().getCustomer();
 
         setBackground(Color.white);
         setLayout(new GridLayout());
@@ -203,6 +209,26 @@ public class WelcomePanel extends JPanel{
 
         add(leftPanel);
         add(backgroundPanel);
-    }
 
+        loginButton.addActionListener(e->{
+            if(isValidLogin(textField.getText(), passwordField.getText())){
+                int id = customers.stream().filter(c -> c.getCustomerEMail()
+                        .equals(textField.getText()) && c.getPassword().equals(passwordField.getText())).map(Customer::getCustomerID)
+                        .findFirst().orElse(null);
+                buttons.setCustID(id);
+                buttons.setState(State.INTRO);
+                buttons.getGui().updateGui();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Wrong username or password");
+            }
+        });
+    }
+    public boolean isValidLogin(String email, String password) {
+        if (customers.stream().anyMatch(c -> c.getCustomerEMail().equals(email) && c.getPassword().equals(password))) {
+            System.out.println("hej");
+            return true;
+        }
+        return false;
+    }
 }

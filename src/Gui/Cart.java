@@ -6,6 +6,7 @@ import Utilities.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +54,12 @@ public class Cart extends JPanel{
 
         proceedButton.addActionListener(e->{
             for(Integer integer : buttons.getProductID()){
-                buttons.getGui().getMain().callStored(1, 2, integer);
+                try {
+                    buttons.getGui().getMain().callStored(1, buttons.getCustID(), integer);
+                }
+                catch(RuntimeException ex) {
+                    JOptionPane.showMessageDialog(null, "Product of of stock");
+                }
             }
             buttons.setProductID(0);
             buttons.setState(State.INTRO);

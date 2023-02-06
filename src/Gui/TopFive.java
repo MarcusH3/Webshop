@@ -9,6 +9,7 @@ import Utilities.StringListOperation;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,6 +77,18 @@ public class TopFive extends JPanel {
         for(int i = 0; i<tempTopFive.size(); i++){
             tempStringList.add(tempTopFive.get(i)[0] + " " + tempTopFive.get(i)[1]);
         }
+
+        tempStringList.sort((o1, o2) -> {
+            String[] s1 = o1.split(" ");
+            String[] s2 = o2.split(" ");
+            if (Integer.valueOf(s1[1]) < Integer.valueOf(s2[1])) {
+                return -1;
+            } else if (Integer.valueOf(s1[1]) > Integer.valueOf(s2[1])) {
+                return 1;
+            }
+            return 0;
+        });
+        Collections.reverse(tempStringList);
         return tempStringList;
     }
 

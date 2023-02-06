@@ -53,6 +53,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     private State previousState;
 
+    private int custID;
+
     public Buttons(Gui gui){
 
         introButtonDimension = new Dimension(200,60);
@@ -328,8 +330,8 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
         switch(getState()){
             case WELCOME -> {
-                if(e.getSource() == loginButton){
-                    ArrayList<Customer> customers = gui.getMain().getCustomer();
+           /*     if(e.getSource() == loginButton){
+                    List<Customer> customers = gui.getMain().getCustomer();
                     for(Customer customer : customers){
                         if(customer.getCustomerFirstName().equalsIgnoreCase("marcus")) {
                             setPreviousState(getState());
@@ -341,7 +343,7 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
                     }
                     System.out.println("Sorry you god damn commie");
 
-                }
+                }*/
                 if(e.getSource() == exitButton){
                     System.exit(1);
                 }
@@ -648,5 +650,13 @@ public class Buttons extends AbstractGui implements ActionListener, MouseListene
 
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
+    }
+
+    public int getCustID() {
+        return custID;
+    }
+
+    public void setCustID(int custID) {
+        this.custID = custID;
     }
 }

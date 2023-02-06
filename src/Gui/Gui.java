@@ -56,9 +56,8 @@ public class Gui implements ActionListener {
         backPanel = new BackPanel();
         welcomePanel = new WelcomePanel(buttons);
         introPanel = new IntroPanel(buttons);
-        leftAlignedMenu = new LeftAlignedMenu(buttons);
+
         pageNotFoundPanel = new PageNotFound(buttons);
-        genderPanel = new GenderPanel(buttons);
         signUpPanel = new SignUpPanel(buttons);
 
 
@@ -92,6 +91,8 @@ public class Gui implements ActionListener {
                backPanel.add(signUpPanel);
            }
             case INTRO -> {
+                genderPanel = new WelcomeCustomer(buttons);
+                leftAlignedMenu = new LeftAlignedMenu(buttons);
                 introPanel.add(leftAlignedMenu);
                 introPanel.add(genderPanel);
                 introPanel.setVisible(true);
@@ -100,12 +101,14 @@ public class Gui implements ActionListener {
 
             //TODO: Fix not found state;
            case NOT_FOUND -> {
+               leftAlignedMenu = new LeftAlignedMenu(buttons);
                introPanel.add(leftAlignedMenu);
                introPanel.add(pageNotFoundPanel);
                introPanel.setVisible(true);
                backPanel.add(introPanel);
            }
            case TOP_FIVE -> {
+               leftAlignedMenu = new LeftAlignedMenu(buttons);
                topFiveMenu = new TopFive(buttons);
                introPanel.add(leftAlignedMenu);
                introPanel.add(topFiveMenu);
@@ -113,6 +116,7 @@ public class Gui implements ActionListener {
                backPanel.add(introPanel);
            }
            case PRODUCTS -> {
+               leftAlignedMenu = new LeftAlignedMenu(buttons);
                productPanel = new ProductPanel(buttons);
                introPanel.add(leftAlignedMenu);
                introPanel.add(productPanel);
@@ -120,6 +124,7 @@ public class Gui implements ActionListener {
                backPanel.add(introPanel);
            }
            case LISTINGS -> {
+               leftAlignedMenu = new LeftAlignedMenu(buttons);
                listings = new Listings(buttons);
                introPanel.add(leftAlignedMenu);
                introPanel.add(listings);
@@ -128,6 +133,7 @@ public class Gui implements ActionListener {
            }
 
            case CART -> {
+               leftAlignedMenu = new LeftAlignedMenu(buttons);
                cart = new Cart(buttons);
                introPanel.add(leftAlignedMenu);
                introPanel.add(cart);

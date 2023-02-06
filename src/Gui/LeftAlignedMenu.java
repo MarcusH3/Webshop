@@ -23,11 +23,8 @@ private ArrayList<Product> stringList;
     private JButton button7;
     private JButton button8;
     private JButton button9;
-    private Customer customer;
-    public LeftAlignedMenu(Buttons buttons){
 
-        customer = new Customer();
-        customer = customer.getCustomer();
+    public LeftAlignedMenu(Buttons buttons){
 
         setBackground(Color.white);
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
@@ -73,6 +70,7 @@ private ArrayList<Product> stringList;
         button6 = buttons.getIntroButton6();
         button7 = buttons.getIntroButton7();
 
+
         ImageIcon searchIcon = new ImageIcon("Res/Title13.png");
         JLabel searchLabel = new JLabel(searchIcon);
         searchLabel.setBounds(50,108,60,60);
@@ -89,6 +87,7 @@ private ArrayList<Product> stringList;
         welcomeLabel.add(button5);
         button6.setBounds(50,494,200,84);
         welcomeLabel.add(button6);
+
 
         /*panel1.add(button2);
         welcomeLabel.add(panel1);
@@ -109,4 +108,5 @@ private ArrayList<Product> stringList;
         add(leftPanel);
         setPreferredSize(new Dimension(300,763));
     }
+
 }

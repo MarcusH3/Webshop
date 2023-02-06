@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Listings extends JPanel {
-    private final JPanel north;
     private final JPanel west;
     private final JPanel center;
     private final JPanel east;
@@ -57,7 +56,7 @@ public class Listings extends JPanel {
         setPreferredSize(new Dimension(700,763));
         setLayout(new BorderLayout());
 
-        north= new JPanel();
+        JPanel north = new JPanel();
         north.setPreferredSize(new Dimension(700, 100));
         north.setBackground(Color.white);
 
@@ -131,18 +130,39 @@ public class Listings extends JPanel {
             comboBox1.setVisible(false);
             comboBox2.setVisible(false);
 
+            centerListing1.setVisible(false);
+            centerListing2.setVisible(false);
+            centerListing3.setVisible(false);
+            centerListing4.setVisible(false);
+            centerListing6.setVisible(false);
+            centerListing5.setVisible(false);
+
         });
 
         colorButton.addActionListener(e->{
             comboBox.setVisible(false);
             comboBox1.setVisible(true);
             comboBox2.setVisible(false);
+
+            centerListing1.setVisible(false);
+            centerListing2.setVisible(false);
+            centerListing3.setVisible(false);
+            centerListing4.setVisible(false);
+            centerListing6.setVisible(false);
+            centerListing5.setVisible(false);
         });
 
         sizeButton.addActionListener(e->{
             comboBox.setVisible(false);
             comboBox1.setVisible(false);
             comboBox2.setVisible(true);
+
+            centerListing1.setVisible(false);
+            centerListing2.setVisible(false);
+            centerListing3.setVisible(false);
+            centerListing4.setVisible(false);
+            centerListing6.setVisible(false);
+            centerListing5.setVisible(false);
         });
 
         customerSpending.addActionListener(e->{
@@ -398,19 +418,7 @@ public class Listings extends JPanel {
                         .get()
                         .getFullName();
 
-return customerFullName;
-
-
-/*        return orders.stream()
-            .flatMap(order -> coordinationTables.stream()
-                    .filter(coordinationTable -> order.getCoordinationTableID() == coordinationTable.getCoordinationTableID())
-                    .flatMap(coordinationTable -> orderDetails.stream()
-                            .filter(orderDetail -> coordinationTable.getCoordinationTableID() == orderDetail.getCoordinationTableID())
-                            .flatMap(orderDetail -> customers.stream()
-                                    .filter(customer -> coordinationTable.getCustomerID() == id)
-                                    .map(customer -> customer.getFullName())
-                            ))).findFirst().orElse(null);*/
-
+        return customerFullName;
     }
     public String getAddress(int id){
         return customers.stream().filter(c->c.getCustomerID() == id).map(Customer::getCustomerAddress).findAny().orElse(null);
@@ -498,7 +506,9 @@ for (Object obj : result){
         return listToReturn;
     }
     public List<String> getCustomersTotalSpent() {
+        List<String[]> listToManipulate = new ArrayList<>();
         List<String> customersTotalSpent = new ArrayList<>();
+        List<String> listToReturn = new ArrayList<>();
         List<Integer> coordinationTableIDs = orderDetails.stream().map(OrderDetail::getCoordinationTableID).collect(Collectors.toList());        Set<Integer> uniqueCoordinationTableIDs = new HashSet<>(coordinationTableIDs);
         for (Integer coordinationTableID : uniqueCoordinationTableIDs) {
             double totalSpent = 0;
@@ -510,29 +520,51 @@ for (Object obj : result){
 
                     int customerID = coordinationTables.stream().filter(c -> c.getCoordinationTableID() == coordinationTableID).findFirst().get().getCustomerID();
                     customersTotalSpent.add(customers.stream().filter(c -> c.getCustomerID() == customerID).findFirst().get().getCustomerFirstName() + " "
-                            + customers.
-                            stream().
-                            filter(c -> c.getCustomerID() == customerID).
+                            + customers.stream().filter(c -> c.getCustomerID() == customerID).
                             findFirst().get().getCustomerLastName() + " - " + totalSpent);
                 }
             }
 
         }
 
-        customersTotalSpent.sort((o1, o2) -> {
-            String[] s1 = o1.split(" - ");
-            String[] s2 = o2.split(" - ");
-            if (Double.valueOf(s1[1]) < Double.valueOf(s2[1])) {
-                return -1;
-            } else if (Double.valueOf(s1[1]) > Double.valueOf(s2[1])) {
-                return 1;
+        for(String str : customersTotalSpent){
+            String[] parts = str.split(" - ");
+            listToManipulate.add(parts);
+        }
+
+
+        StringListOperation listOperation = list -> {
+            while(list.stream().anyMatch(arr -> list.stream().anyMatch(arr2 -> arr[0].equals(arr2[0]) && arr != arr2))) {
+                for (int i = 0; i < list.size(); i++) {
+                    for (int j = i + 1; j < list.size(); j++) {
+                        if (list.get(i)[0].equals(list.get(j)[0])) {
+                            double temp1 = Double.valueOf(list.get(i)[1]);
+                            double temp2 = Double.valueOf(list.get(j)[1]);
+                            temp1 += temp2;
+                            list.get(i)[1] = Double.toString(temp1);
+                            list.remove(j);
+                        }
+                    }
+                }
             }
-            return 0;
-        });
-        Collections.reverse(customersTotalSpent);
-        return customersTotalSpent;
+        };
+        listOperation.manipulateList(listToManipulate);
+
+        Collections.sort(listToManipulate, Comparator.comparingDouble(arr -> Double.parseDouble(arr[1])));
+        Collections.reverse(listToManipulate);
+
+        for(String[] str : listToManipulate) {
+
+            String strToJoin = String.join(" ", str);
+            listToReturn.add(strToJoin);
+        }
+
+
+        return listToReturn;
     }
     public List<String> getNumberOfOrdersByCustomer(){
+        List<String[]> listToManipulate = new ArrayList<>();
+        List<String> listToReturn = new ArrayList<>();
         List<String> customersOrder = new ArrayList<>();
         for(CoordinationTable coordinationTable: coordinationTables){
             int customerID = coordinationTable.getCustomerID();
@@ -544,18 +576,44 @@ for (Object obj : result){
             }
             Optional<Customer> customer = customers.stream().filter(c -> c.getCustomerID() == customerID).findFirst();
             if(customer.isPresent()){
-                customersOrder.add(customer.get().getCustomerFirstName() + " " + customer.get().getCustomerLastName() + " " + orderCount);
+                customersOrder.add(customer.get().getCustomerFirstName() + " " + customer.get().getCustomerLastName() + "-" + orderCount);
             }
         }
 
-        Collections.sort(customersOrder, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return Integer.parseInt(o2.split(" ")[2]) - Integer.parseInt(o1.split(" ")[2]);
+        for(String str : customersOrder){
+            String[] parts = str.split("-");
+            listToManipulate.add(parts);
+        }
+
+
+        StringListOperation listOperation = list -> {
+            while(list.stream().anyMatch(arr -> list.stream().anyMatch(arr2 -> arr[0].equals(arr2[0]) && arr != arr2))) {
+                for (int i = 0; i < list.size(); i++) {
+                    for (int j = i + 1; j < list.size(); j++) {
+                        if (list.get(i)[0].equals(list.get(j)[0])) {
+                            int temp1 = Integer.valueOf(list.get(i)[1]);
+                            int temp2 = Integer.valueOf(list.get(j)[1]);
+                            temp1 += temp2;
+                            list.get(i)[1] = Integer.toString(temp1);
+                            list.remove(j);
+                        }
+                    }
+                }
             }
-        });
-        Collections.reverse(customersOrder);
-        return customersOrder;
+        };
+        listOperation.manipulateList(listToManipulate);
+
+        Collections.sort(listToManipulate, Comparator.comparingDouble(arr -> Double.parseDouble(arr[1])));
+        Collections.reverse(listToManipulate);
+
+        for(String[] str : listToManipulate) {
+
+            String strToJoin = String.join(" ", str);
+            listToReturn.add(strToJoin);
+        }
+
+
+        return listToReturn;
     }
 
 }
