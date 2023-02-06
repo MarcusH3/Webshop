@@ -64,7 +64,7 @@ public class Cart extends JPanel{
             buttons.setProductID(0);
             buttons.setState(State.INTRO);
             buttons.getGui().updateGui();
-            System.out.println("ADD THIS TO STORED PROCEDURE");
+            JOptionPane.showMessageDialog(null, "Orders successfully placed");
         });
         discardButton.addActionListener(e->{
             buttons.setProductID(0);

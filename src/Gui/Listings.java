@@ -11,21 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Listings extends JPanel {
-    private final JPanel west;
-    private final JPanel center;
-    private final JPanel east;
-    private final JPanel south;
-    private final JButton modelButton;
-    private final JButton colorButton;
-    private final JButton sizeButton;
-    private final JButton cityButton;
-    private final JButton customerOrders;
-    private final JButton customerSpending;
     private final List<Product> products;
     private final List<Database.Color> colors;
     private final List<Size> sizes;
     private final List<Order> orders;
-    private List<OrderDetail> orderDetails;
+    private final List<OrderDetail> orderDetails;
     private final List<Customer> customers;
     private final List<CoordinationTable> coordinationTables;
     private final List<Inventory> inventories;
@@ -60,11 +50,11 @@ public class Listings extends JPanel {
         north.setPreferredSize(new Dimension(700, 100));
         north.setBackground(Color.white);
 
-        west = new JPanel();
+        JPanel west = new JPanel();
         west.setPreferredSize(new Dimension(150,563));
         west.setBackground(Color.white);
 
-        center = new JPanel();
+        JPanel center = new JPanel();
         center.setPreferredSize(new Dimension(450,563));
         center.setBackground(Color.white);
 
@@ -105,26 +95,26 @@ public class Listings extends JPanel {
         center.add(centerListing5);
         center.add(centerListing6);
 
-        east = new JPanel();
+        JPanel east = new JPanel();
         east.setPreferredSize(new Dimension(100,563));
-        east.setBackground(Color.cyan);
+        east.setBackground(Color.white);
 
-        south = new JPanel();
+        JPanel south = new JPanel();
         south.setPreferredSize(new Dimension(700, 100));
         south.setBackground(Color.white);
 
-        modelButton = buttons.getModelButton();
-        colorButton = buttons.getColorButton();
-        sizeButton = buttons.getSizeButton();
-        cityButton = buttons.getCityButton();
-        customerOrders = buttons.getCustomerOrders();
-        customerSpending = buttons.getCustomerSpending();
+        JButton modelButton = buttons.getModelButton();
+        JButton colorButton = buttons.getColorButton();
+        JButton sizeButton = buttons.getSizeButton();
+        JButton cityButton = buttons.getCityButton();
+        JButton customerOrders = buttons.getCustomerOrders();
+        JButton customerSpending = buttons.getCustomerSpending();
 
         modelButton.setMinimumSize(new Dimension(100,70));
         colorButton.setMinimumSize(new Dimension(100,70));
         sizeButton.setMinimumSize(new Dimension(100,70));
 
-        //table.setVisible(false);
+
         modelButton.addActionListener(e->{
             comboBox.setVisible(true);
             comboBox1.setVisible(false);
@@ -166,6 +156,7 @@ public class Listings extends JPanel {
         });
 
         customerSpending.addActionListener(e->{
+            centerListing5.removeAll();
             for (String item : getCustomersTotalSpent()){
                 JLabel label2 = new JLabel(item);
                 centerListing5.add(label2);
@@ -189,6 +180,7 @@ public class Listings extends JPanel {
         });
 
         customerOrders.addActionListener(e-> {
+            centerListing6.removeAll();
             for (String item : getNumberOfOrdersByCustomer()) {
                 JLabel label2 = new JLabel(item);
                 centerListing6.add(label2);
@@ -208,6 +200,7 @@ public class Listings extends JPanel {
         });
 
         cityButton.addActionListener(e->{
+            centerListing4.removeAll();
             for (String item : byCity()){
                 JLabel label2 = new JLabel(item);
                 centerListing4.add(label2);
@@ -254,12 +247,10 @@ public class Listings extends JPanel {
 
 
         comboBox.addActionListener(e->{
-
+centerListing1.removeAll();
             if(comboBox.getSelectedItem() != "Select Model"){
-                centerListing1.removeAll();
                 if(getNameByProduct(comboBox.getSelectedItem().toString()).size() == 0){
                     centerListing1.removeAll();
-                    centerListing1.repaint();
                 }
 
                 for (String item : getNameByProduct(comboBox.getSelectedItem().toString())) {
@@ -274,6 +265,7 @@ public class Listings extends JPanel {
         });
 
         comboBox1.addActionListener(e->{
+            centerListing2.removeAll();
             if(comboBox1.getSelectedItem() != "Select Color"){
                 centerListing2.removeAll();
                 if(getNameByColor(comboBox1.getSelectedItem().toString()).size() == 0){
